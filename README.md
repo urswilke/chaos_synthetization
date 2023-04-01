@@ -1,0 +1,1 @@
+Repo that contains the code for a minimal vanilla js app to use [sfumato](https://github.com/felixroos/sfumato/). It uses [vite](https://vitejs.dev/) and can be deployed to github pages. See the result [here](https://urswilke.github.io/sf2_minimal/).
