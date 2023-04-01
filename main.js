@@ -1,24 +1,11 @@
-import './style.css'
-import javascriptLogo from './javascript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.js'
+import { loadSoundfont, startPresetNote } from 'sfumato';
 
-document.querySelector('#app').innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank">
-      <img src="${javascriptLogo}" class="logo vanilla" alt="JavaScript logo" />
-    </a>
-    <h1>Hello Vite!</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite logo to learn more
-    </p>
-  </div>
-`
+const sf2 = await loadSoundfont(
+  'https://raw.githubusercontent.com/felixroos/felixroos.github.io/main/public/Earthbound_NEW.sf2'
+)
 
-setupCounter(document.querySelector('#counter'))
+const ctx = typeof AudioParam !== 'undefined' ? new AudioContext() : null;
+let preset = 0;
+let midi = 60; 
+let time = 1;
+startPresetNote(ctx, sf2.presets[0], midi, time)
