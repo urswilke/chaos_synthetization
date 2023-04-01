@@ -11,8 +11,7 @@ function playNote(ctx, midi) {
     stopHandle((ctx.currentTime || 0));
   }, 500);
 }
-const notes = [60, 62, 64, 65, 67, 67, 60];
-async function playSequence(){
+async function playSequence(notes){
   const ctx = typeof AudioParam !== 'undefined' ? new AudioContext() : null;
   const sleep = m => new Promise(r => setTimeout(r, m));
 
@@ -21,6 +20,14 @@ async function playSequence(){
     playNote(ctx, midi)
   }
 }
+const notes1 = [60, 62, 64, 65, 67, 67, 60];
+const notes2 = [64, 65, 67, 67, 60, 60, 62];
 
+function playMultipleSequences(l) {
+  for (let i = 0; i < l.length; i++) {
+    const seq = l[i];
+    playSequence(seq)
+  }
+}
 
-document.getElementById("play-endless-note-button").addEventListener('click', playSequence.bind(null, notes));
+document.getElementById("play-endless-note-button").addEventListener('click', playMultipleSequences.bind(null, [notes1, notes2]));
