@@ -5,11 +5,77 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://d3js.org/d3.v6.min.js"></script>
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="/main.js"></script>
     <button name="play-multiple-sequences" id="play-multiple-sequences">Click to play endless note</button>
-    <a href="https://github.com/urswilke/chaos_synthetization">Source code</a>
+    <fieldset id="scale_notes">
+      <legend>Choose scale notes</legend>
+      <div>
+          <input type="checkbox" id="C" name="C" value=0 checked />
+          <label for="">C</label>
+      </div>
+      <div>
+          <input type="checkbox" id="C#" name="C#" value=1 />
+          <label for="C#">C#</label>
+      </div>
+      <div>
+          <input type="checkbox" id="D" name="D" value=2 checked />
+          <label for="D">D</label>
+      </div>
+      <div>
+          <input type="checkbox" id="D#" name="D#" value=3 />
+          <label for="D#">D#</label>
+      </div>
+      <div>
+          <input type="checkbox" id="E" name="E" value=4 checked />
+          <label for="E">E</label>
+      </div>
+      <div>
+          <input type="checkbox" id="F" name="F" value=5 checked />
+          <label for="F">F</label>
+      </div>
+      <div>
+          <input type="checkbox" id="F#" name="F#" value=6 />
+          <label for="F#">F#</label>
+      </div>
+      <div>
+          <input type="checkbox" id="G" name="G" value=7 checked />
+          <label for="G">G</label>
+      </div>
+      <div>
+          <input type="checkbox" id="G#" name="G#" value=8 />
+          <label for="G#">G#</label>
+      </div>
+      <div>
+          <input type="checkbox" id="A" name="A" value=9 checked />
+          <label for="A">A</label>
+      </div>
+      <div>
+          <input type="checkbox" id="A#" name="A#" value=10 />
+          <label for="A#">A#</label>
+      </div>
+      <div>
+          <input type="checkbox" id="B" name="B" value=11 checked />
+          <label for="B">B</label>
+      </div>
+  </fieldset>
+
+
+  <button name="get-notes-button" id="get-notes-button">Use selected notes in scale</button>
+  <p id="pScaleNotes">
+
+  </p>
+  <br>
+  <input id="rootnote" type="number" value="60" min="24" max="127">choose root note integer</input>
+
+  <div id="stepPlot">
+
+  </div>
+
+  <a href="https://github.com/urswilke/chaos_synthetization">Source code</a>
   </body>
 </html>
