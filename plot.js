@@ -12,6 +12,12 @@ export default function plotLines(parent, data, allScaleNotes) {
                 curve: "step",
                 stroke: "l"
             }),
+            Plot.dot(data, {
+                x: "i",
+                y: "r",
+                stroke: "l",
+                r: 0.5
+            }),
             Plot.text(data, Plot.selectLast({
                 x: "i",
                 y: "midi",
