@@ -20,14 +20,13 @@ async function playSequence(notes){
     playNote(ctx, midi)
   }
 }
-const notes1 = [60, 62, 64, 65, 67, 67, 60];
-const notes2 = [64, 65, 67, 67, 60, 60, 62];
 
 function playMultipleSequences(l) {
   for (let i = 0; i < l.length; i++) {
-    const seq = l[i];
-    playSequence(seq)
+    playSequence(l[i])
   }
 }
 
-document.getElementById("play-endless-note-button").addEventListener('click', playMultipleSequences.bind(null, [notes1, notes2]));
+const notes1 = [60, 62, 64, 65, 67, 67, 60];
+const notes2 = [64, 65, 67, 67, 60, 60, 62];
+document.getElementById("play-multiple-sequences").addEventListener('click', playMultipleSequences.bind(null, [notes1, notes2]));
