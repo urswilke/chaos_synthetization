@@ -24,6 +24,12 @@ function gen_mult_arrays(n, len) {
   return res;
 }
 
+function extractArray(arrayElement) {
+  return arrayElement[1].map(a => a.midi);
+}
+function genArraysArray(noteArrays) {
+  return noteArrays.map(extractArray);
+}
 function gen_mult_arrays_flat(noteArrays) {
   return noteArrays.
     flatMap(([l, noteArrays]) => noteArrays.map(d => ({l, ...d})))
@@ -56,4 +62,22 @@ function getAllScaleNotes(steps, rootNote = 60) {
   return octaveArray;
     
 }
-export { gen_mult_arrays, gen_mult_arrays_flat, getChecked, getAllScaleNotes };
+
+function getClosestScaleNote(note, scale) {
+  // from here: https://stackoverflow.com/a/35000557
+  return scale.reduce((prev, curr) => Math.abs(curr - note) < Math.abs(prev - note) ? curr : prev);
+}
+function addClosestScaleNotes(notes, scale) {
+  // return notes[1].map(obj => ({ ...obj, midi: getClosestScaleNote(scale, obj.r) }));
+  for (let i = 0; i < notes[1].length; i++) {
+    notes[1][i].midi = getClosestScaleNote(notes[1][i].r, scale)
+  }
+  return notes;
+}
+function multAddClosestScaleNotes(noteArrays, scale) {
+  for (let i = 0; i < noteArrays.length; i++) {
+    noteArrays[i] = addClosestScaleNotes(noteArrays[i], scale);
+  }
+  return noteArrays;
+}
+export { gen_mult_arrays, gen_mult_arrays_flat, getChecked, getAllScaleNotes, genArraysArray, multAddClosestScaleNotes };

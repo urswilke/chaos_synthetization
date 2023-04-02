@@ -8,13 +8,13 @@ export default function plotLines(parent, data, allScaleNotes) {
             Plot.ruleY(allScaleNotes, { stroke: "red", strokeWidth: 0.2 }),
             Plot.line(data, {
                 x: "i",
-                y: "r",
+                y: "midi",
                 curve: "step",
                 stroke: "l"
             }),
             Plot.text(data, Plot.selectLast({
                 x: "i",
-                y: "r",
+                y: "midi",
                 z: "l",
                 text: "l",
                 textAnchor: "start",
