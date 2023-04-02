@@ -1,7 +1,7 @@
 import { defineConfig } from "vite";
 
 export default defineConfig({
-    base: '/sf2_minimal/',  
+    base: '/chaos_synthetization/',  
     // from here:
     esbuild: {
         supported: {
