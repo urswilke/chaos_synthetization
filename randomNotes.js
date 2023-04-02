@@ -24,10 +24,9 @@ function gen_mult_arrays(n, len) {
   return res;
 }
 
-function gen_mult_arrays_flat(n, len) {
-  let mult_arr = gen_mult_arrays(n, len)
-  return mult_arr.
-    flatMap(([l, data]) => data.map(d => ({l, ...d})))
+function gen_mult_arrays_flat(noteArrays) {
+  return noteArrays.
+    flatMap(([l, noteArrays]) => noteArrays.map(d => ({l, ...d})))
 }
 
 function getChecked() {
@@ -57,4 +56,4 @@ function getAllScaleNotes(steps, rootNote = 60) {
   return octaveArray;
     
 }
-export {gen_mult_arrays_flat, getChecked, getAllScaleNotes};
+export { gen_mult_arrays, gen_mult_arrays_flat, getChecked, getAllScaleNotes };
