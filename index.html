@@ -34,6 +34,11 @@
     </p>
      
     <div id="slider-range"></div>
+    <input id="rootnote" type="number" value="60" min="24" max="127">choose root note integer</input>
+    <input id="n_curves" type="number" value="10" min="1" max="50">number of random curves</input>
+    <input id="n_timesteps" type="number" value="30" min="1" max="1000">number of time steps</input>
+    <input id="note_dur" type="number" value="0.5" min="0.1" max="10">note duration (in s)</input>
+    <button name="gen-random-curves-button" id="gen-random-curves-button">Click to generate random curves with these parameters</button>
   
       <fieldset id="scale_notes">
       <legend>Choose scale notes</legend>
@@ -92,7 +97,6 @@
 
   </p>
   <br>
-  <input id="rootnote" type="number" value="60" min="24" max="127">choose root note integer</input>
 
   <div id="stepPlot">
 
