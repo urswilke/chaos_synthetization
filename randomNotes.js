@@ -1,5 +1,6 @@
 import plotLines from "./plot.js";
 import playMultipleSequences from './playNotes.js'
+import perlin from 'perlin-noise' ;
 
 class ScaleNotes {
   constructor(scale_notes, midi_min, midi_max) {
@@ -52,17 +53,13 @@ class RandomMidiCurves {
     )
   }
 }
+function genPerlinSequence(len, midi_min, midi_max) {
+  return perlin.generatePerlinNoise(1, len).map(x => (x) * (midi_max - midi_min) + midi_min);
 
-function getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
-}
-function genRandomByteSequence(len, midi_min, midi_max) {
-    let seq = Array.from({length: len}, () => getRndInteger(midi_min, midi_max));
-    return seq;
 }
   
 function gen_obj_arr(len, midi_min, midi_max) {
-    let arr = genRandomByteSequence(len, midi_min, midi_max);
+    let arr = genPerlinSequence(len, midi_min, midi_max);
     var x = new Array(arr.length);
     for (var i = 0; i < arr.length; i++) {
         x[i] = {i: i, r: arr[i]};

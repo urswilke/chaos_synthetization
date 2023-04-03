@@ -13,6 +13,7 @@
   },
   "dependencies": {
     "@observablehq/plot": "^0.6.5",
+    "perlin-noise": "^0.0.1",
     "sfumato": "^0.1.2"
   }
 }
