@@ -1,13 +1,13 @@
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
-function genRandomByteSequence(len) {
-    let seq = Array.from({length: len}, () => getRndInteger(0,127));
+function genRandomByteSequence(len, midi_min, midi_max) {
+    let seq = Array.from({length: len}, () => getRndInteger(midi_min, midi_max));
     return seq;
 }
   
-function gen_obj_arr(len) {
-    let arr = genRandomByteSequence(len);
+function gen_obj_arr(len, midi_min, midi_max) {
+    let arr = genRandomByteSequence(len, midi_min, midi_max);
     var x = new Array(arr.length);
     for (var i = 0; i < arr.length; i++) {
         x[i] = {i: i, r: arr[i]};
@@ -15,10 +15,10 @@ function gen_obj_arr(len) {
     return x
 }
 
-function gen_mult_arrays(n, len) {
+function gen_mult_arrays(n, len, midi_min, midi_max) {
   let res = new Array(n);
   for (var i = 0; i < n; i++) {
-    let x = gen_obj_arr(len);
+    let x = gen_obj_arr(len, midi_min, midi_max);
     res[i] = [i.toString(), x];
   }
   return res;
@@ -45,7 +45,7 @@ function getChecked() {
   return ids;
 }
 
-function getAllScaleNotes(steps, rootNote = 60) {
+function getAllScaleNotes(steps, midi_min, midi_max, rootNote = 60) {
 
   let rootNoteMin = rootNote % 12;
   let i = rootNoteMin;
@@ -59,7 +59,8 @@ function getAllScaleNotes(steps, rootNote = 60) {
     octaveArray[i] = repeatedArray[i] + octave * 12;
     
   }
-  return octaveArray;
+  return octaveArray
+    .filter(num => num >= midi_min & num <= midi_max);
     
 }
 

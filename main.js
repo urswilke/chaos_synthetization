@@ -12,19 +12,25 @@ function get_n_timesteps() {
 function get_note_dur() {
   duration = Number(document.getElementById("note_dur").value) * 1000;
 }
+function get_midi_range() {
+  midi_min = Number(document.getElementById("midi_min_string").value)
+  midi_max = Number(document.getElementById("midi_max_string").value)
+}
+
 function gen_random_curves() {
+  get_midi_range();
   get_n_curves();
   get_n_timesteps();
   get_note_dur();
   let scaleNotes = RndNotes.getChecked();
-  allScaleNotes = RndNotes.getAllScaleNotes(scaleNotes);
-  noteArraysRaw = RndNotes.gen_mult_arrays(n_curves, n_timesteps);
+  allScaleNotes = RndNotes.getAllScaleNotes(scaleNotes, midi_min, midi_max);
+  noteArraysRaw = RndNotes.gen_mult_arrays(n_curves, n_timesteps, midi_min, midi_max);
   RndNotes.multAddClosestScaleNotes(noteArraysRaw, allScaleNotes);
   let noteArraysArray = RndNotes.genArraysArray(noteArraysRaw);
   let noteArrayFlat = RndNotes.gen_mult_arrays_flat(noteArraysRaw)
   plotLines(document.body, noteArrayFlat, allScaleNotes);
 }
-var duration, n_timesteps, n_curves, allScaleNotes, noteArraysRaw;
+var duration, n_timesteps, midi_min, midi_max, n_curves, allScaleNotes, noteArraysRaw;
 gen_random_curves()
 document.getElementById("gen-random-curves-button").addEventListener('click', gen_random_curves);
 
