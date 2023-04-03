@@ -25,7 +25,6 @@ function gen_random_curves() {
   allScaleNotes = RndNotes.getAllScaleNotes(scale_notes, midi_min, midi_max);
   noteArraysRaw = RndNotes.gen_mult_arrays(n_curves, n_timesteps, midi_min, midi_max);
   RndNotes.multAddClosestScaleNotes(noteArraysRaw, allScaleNotes);
-  let noteArraysArray = RndNotes.genArraysArray(noteArraysRaw);
   let noteArrayFlat = RndNotes.gen_mult_arrays_flat(noteArraysRaw)
   plotLines(document.body, noteArrayFlat, allScaleNotes);
 }
@@ -48,7 +47,7 @@ function adaptToSelectedNotes() {
 }
 // adaptToSelectedNotes();
 
+const rr = new RndNotes.RandomMidiCurves(n_curves, n_timesteps, midi_min, midi_max, scale_notes, duration) 
 
 document.getElementById("plot-and-play-button").addEventListener('click', adaptToSelectedNotes);
-
 
