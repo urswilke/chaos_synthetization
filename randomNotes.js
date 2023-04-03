@@ -41,7 +41,7 @@ function getChecked() {
       .map(function() {return this.value;})
       .get()
       .map(Number);
-  document.getElementById("pScaleNotes").innerHTML = ids
+
   return ids;
 }
 
