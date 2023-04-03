@@ -20,18 +20,18 @@ function get_ui_params() {
 
 function gen_random_curves() {
   get_ui_params();
-  const rmc = new RandomMidiCurves(n_curves, n_timesteps, midi_min, midi_max, scale_notes, duration) 
   rmc.plot();
 }
 var duration, n_timesteps, midi_min, midi_max, n_curves, scale_notes;
-gen_random_curves()
+get_ui_params();
+const rmc = new RandomMidiCurves(n_curves, n_timesteps, midi_min, midi_max, scale_notes, duration) 
+rmc.plot();
 document.getElementById("gen-random-curves-button").addEventListener('click', gen_random_curves);
 
 
 
 
 function adaptToSelectedNotes() {
-    const rmc = new RandomMidiCurves(n_curves, n_timesteps, midi_min, midi_max, scale_notes, duration) 
     rmc.play();
 }
 
