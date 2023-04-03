@@ -21,8 +21,8 @@ function get_ui_params() {
 }
 
 function gen_random_curves() {
-  get_ui_params();
-  rmc.update_curve_data();
+  let ui_params = get_ui_params();
+  rmc.update_curve_data(ui_params);
   rmc.plot();
 }
 var ui_params = get_ui_params();

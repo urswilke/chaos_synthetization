@@ -18,20 +18,16 @@ class ScaleNotes {
 
 class RandomMidiCurves {
   constructor(ui_params) {
-    this.midi_min = ui_params.midi_min;
-    this.midi_max = ui_params.midi_max;
-    this.n_curves = ui_params.n_curves;
-    this.n_timesteps = ui_params.n_timesteps;
-    this.duration = ui_params.duration;
-    this.scaleNotes = new ScaleNotes(ui_params.scale_notes, ui_params.midi_min, ui_params.midi_max);
-    this.update_curve_data();
+    this.ui_params = ui_params;
+    this.update_curve_data(ui_params);
   }
-  update_curve_data() {
+  update_curve_data(ui_params = this.ui_params) {
+    this.scaleNotes = new ScaleNotes(ui_params.scale_notes, ui_params.midi_min, ui_params.midi_max);
     this.curve_data = genCurveData(
-      this.n_curves, 
-      this.n_timesteps, 
-      this.midi_min, 
-      this.midi_max,
+      ui_params.n_curves, 
+      ui_params.n_timesteps, 
+      ui_params.midi_min, 
+      ui_params.midi_max,
       this.scaleNotes
     );
  
@@ -52,7 +48,7 @@ class RandomMidiCurves {
   play() {
     playMultipleSequences(
       this.extractMidiArrays(), 
-      this.duration
+      this.ui_params.duration
     )
   }
 }
