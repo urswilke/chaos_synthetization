@@ -35,15 +35,7 @@ function gen_mult_arrays_flat(noteArrays) {
     flatMap(([l, noteArrays]) => noteArrays.map(d => ({l, ...d})))
 }
 
-function getChecked() {
-  let ids = $("fieldset :checkbox")
-      .filter(function() {return this.checked;})
-      .map(function() {return this.value;})
-      .get()
-      .map(Number);
 
-  return ids;
-}
 
 function getAllScaleNotes(steps, midi_min, midi_max, rootNote = 60) {
 
@@ -81,4 +73,4 @@ function multAddClosestScaleNotes(noteArrays, scale) {
   }
   return noteArrays;
 }
-export { gen_mult_arrays, gen_mult_arrays_flat, getChecked, getAllScaleNotes, genArraysArray, multAddClosestScaleNotes };
+export { gen_mult_arrays, gen_mult_arrays_flat, getAllScaleNotes, genArraysArray, multAddClosestScaleNotes };
