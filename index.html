@@ -6,13 +6,43 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
+    <script>
+      $( function() {
+        $( "#slider-range" ).slider({
+          range: true,
+          min: 24,
+          max: 120,
+          values: [ 36, 96 ],
+          slide: function( event, ui ) {
+            $( "#midi_range_string" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );        
+            $( "#midi_min_string" ).val( ui.values[ 0 ]);
+            $( "#midi_max_string" ).val( ui.values[ 1 ]);
+          }
+        });
+      });
+    </script>
     <script src="https://d3js.org/d3.v6.min.js"></script>
   </head>
   <body>
     <div id="app"></div>
     <script type="module" src="./main.js"></script>
-    <button name="play-multiple-sequences" id="play-multiple-sequences">Click to play random notes</button>
-    <fieldset id="scale_notes">
+    <p>
+      <label for="midi_range_string">Midi note range:</label>
+      <input type="text" id="midi_range_string" readonly style="border:0; color:#f6931f; font-weight:bold;">
+    </p>
+     
+    <input type="text"  value="36" id="midi_min_string">
+<input type="text" value="96" id="midi_max_string">
+<div id="slider-range"></div>
+    <input id="rootnote" type="number" value="60" min="24" max="127">choose root note integer</input>
+    <input id="n_curves" type="number" value="10" min="1" max="50">number of random curves</input>
+    <input id="n_timesteps" type="number" value="30" min="1" max="1000">number of time steps</input>
+    <input id="note_dur" type="number" value="0.5" min="0.1" max="10">note duration (in s)</input>
+    <button name="gen-random-curves-button" id="gen-random-curves-button">Click to generate random curves with these parameters</button>
+  
+      <fieldset id="scale_notes">
       <legend>Choose scale notes</legend>
       <div>
           <input type="checkbox" id="C" name="C" value=0 checked />
@@ -64,14 +94,8 @@
       </div>
   </fieldset>
 
-
-  <button name="get-notes-button" id="get-notes-button">Use selected notes in scale</button>
-  <p id="pScaleNotes">
-
-  </p>
-  <br>
-  <input id="rootnote" type="number" value="60" min="24" max="127">choose root note integer</input>
-
+  <button name="plot-and-play-button" id="plot-and-play-button">Click to find closest midi notes in selected scale and plot & play them</button>
+  
   <div id="stepPlot">
 
   </div>
