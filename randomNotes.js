@@ -17,20 +17,24 @@ class ScaleNotes {
 }
 
 class RandomMidiCurves {
-  constructor(n_curves, n_timesteps, midi_min, midi_max, scale_notes, duration) {
-    this.midi_min = midi_min;
-    this.midi_max = midi_max;
-    this.n_curves = n_curves;
-    this.n_timesteps = n_timesteps;
-    this.duration = duration;
-    this.scaleNotes = new ScaleNotes(scale_notes, midi_min, midi_max);
+  constructor(ui_params) {
+    this.midi_min = ui_params.midi_min;
+    this.midi_max = ui_params.midi_max;
+    this.n_curves = ui_params.n_curves;
+    this.n_timesteps = ui_params.n_timesteps;
+    this.duration = ui_params.duration;
+    this.scaleNotes = new ScaleNotes(ui_params.scale_notes, ui_params.midi_min, ui_params.midi_max);
+    this.update_curve_data();
+  }
+  update_curve_data() {
     this.curve_data = genCurveData(
-      n_curves, 
-      n_timesteps, 
-      midi_min, 
-      midi_max,
+      this.n_curves, 
+      this.n_timesteps, 
+      this.midi_min, 
+      this.midi_max,
       this.scaleNotes.getAllScaleNotes()
     );
+ 
   }
   flattenCurveData() {
     return gen_mult_arrays_flat(this.curve_data);
