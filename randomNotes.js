@@ -1,3 +1,58 @@
+import plotLines from "./plot.js";
+import playMultipleSequences from './playNotes.js'
+
+class ScaleNotes {
+  constructor(scale_notes, midi_min, midi_max) {
+    this.scale_notes = scale_notes;
+    this.midi_min = midi_min;
+    this.midi_max = midi_max;
+  }
+  getAllScaleNotes() {
+    return getAllScaleNotes(
+      this.scale_notes,
+      this.midi_min,
+      this.midi_max,
+    );
+  }
+}
+
+class RandomMidiCurves {
+  constructor(ui_params) {
+    this.ui_params = ui_params;
+    this.update_curve_data(ui_params);
+  }
+  update_curve_data(ui_params = this.ui_params) {
+    this.scaleNotes = new ScaleNotes(ui_params.scale_notes, ui_params.midi_min, ui_params.midi_max);
+    this.curve_data = genCurveData(
+      ui_params.n_curves, 
+      ui_params.n_timesteps, 
+      ui_params.midi_min, 
+      ui_params.midi_max,
+      this.scaleNotes
+    );
+ 
+  }
+  flattenCurveData() {
+    return gen_mult_arrays_flat(this.curve_data);
+  }
+  extractMidiArrays() {
+    return genArraysArray(this.curve_data);
+  }
+  plot() {
+    plotLines(
+      document.body, 
+      this.flattenCurveData(), 
+      this.scaleNotes.getAllScaleNotes()
+    );
+  }
+  play() {
+    playMultipleSequences(
+      this.extractMidiArrays(), 
+      this.ui_params.duration
+    )
+  }
+}
+
 function getRndInteger(min, max) {
     return Math.floor(Math.random() * (max - min + 1) ) + min;
 }
@@ -22,6 +77,12 @@ function gen_mult_arrays(n, len, midi_min, midi_max) {
     res[i] = [i.toString(), x];
   }
   return res;
+}
+
+function genCurveData(n, len, midi_min, midi_max, scale) {
+  let noteArrays = gen_mult_arrays(n, len, midi_min, midi_max);
+  multAddClosestScaleNotes(noteArrays, scale.getAllScaleNotes());
+  return noteArrays;
 }
 
 function extractArray(arrayElement) {
@@ -73,4 +134,4 @@ function multAddClosestScaleNotes(noteArrays, scale) {
   }
   return noteArrays;
 }
-export { gen_mult_arrays, gen_mult_arrays_flat, getAllScaleNotes, genArraysArray, multAddClosestScaleNotes };
+export default RandomMidiCurves;
