@@ -1,7 +1,5 @@
-import playMultipleSequences from './playNotes.js'
 
-import plotLines from "./plot.js";
-import * as RndNotes from "./randomNotes.js";
+import RandomMidiCurves from "./randomNotes.js";
 
 function getChecked() {
   let ids = $("fieldset :checkbox")
@@ -22,13 +20,10 @@ function get_ui_params() {
 
 function gen_random_curves() {
   get_ui_params();
-  allScaleNotes = RndNotes.getAllScaleNotes(scale_notes, midi_min, midi_max);
-  noteArraysRaw = RndNotes.gen_mult_arrays(n_curves, n_timesteps, midi_min, midi_max);
-  RndNotes.multAddClosestScaleNotes(noteArraysRaw, allScaleNotes);
-  let noteArrayFlat = RndNotes.gen_mult_arrays_flat(noteArraysRaw)
-  plotLines(document.body, noteArrayFlat, allScaleNotes);
+  const rmc = new RandomMidiCurves(n_curves, n_timesteps, midi_min, midi_max, scale_notes, duration) 
+  rmc.plot();
 }
-var duration, n_timesteps, midi_min, midi_max, n_curves, scale_notes, allScaleNotes, noteArraysRaw;
+var duration, n_timesteps, midi_min, midi_max, n_curves, scale_notes;
 gen_random_curves()
 document.getElementById("gen-random-curves-button").addEventListener('click', gen_random_curves);
 
@@ -36,18 +31,9 @@ document.getElementById("gen-random-curves-button").addEventListener('click', ge
 
 
 function adaptToSelectedNotes() {
-  // gen_random_curves();
-    let noteArrayFlat = RndNotes.gen_mult_arrays_flat(noteArraysRaw)
-    let noteArraysArray = RndNotes.genArraysArray(noteArraysRaw);
-    plotLines(document.body, noteArrayFlat, allScaleNotes);
-    playMultipleSequences(
-      noteArraysArray, 
-      duration
-    );
+    const rmc = new RandomMidiCurves(n_curves, n_timesteps, midi_min, midi_max, scale_notes, duration) 
+    rmc.play();
 }
-// adaptToSelectedNotes();
-
-const rr = new RndNotes.RandomMidiCurves(n_curves, n_timesteps, midi_min, midi_max, scale_notes, duration) 
 
 document.getElementById("plot-and-play-button").addEventListener('click', adaptToSelectedNotes);
 

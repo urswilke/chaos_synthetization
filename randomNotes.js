@@ -1,3 +1,6 @@
+import plotLines from "./plot.js";
+import playMultipleSequences from './playNotes.js'
+
 class ScaleNotes {
   constructor(scale_notes, midi_min, midi_max) {
     this.scale_notes = scale_notes;
@@ -19,7 +22,7 @@ class RandomMidiCurves {
     this.midi_max = midi_max;
     this.n_curves = n_curves;
     this.n_timesteps = n_timesteps;
-    this.duration = this.duration;
+    this.duration = duration;
     this.scaleNotes = new ScaleNotes(scale_notes, midi_min, midi_max);
     this.curve_data = genCurveData(
       n_curves, 
@@ -34,6 +37,19 @@ class RandomMidiCurves {
   }
   extractMidiArrays() {
     return genArraysArray(this.curve_data);
+  }
+  plot() {
+    plotLines(
+      document.body, 
+      this.flattenCurveData(), 
+      this.scaleNotes.getAllScaleNotes()
+    );
+  }
+  play() {
+    playMultipleSequences(
+      this.extractMidiArrays(), 
+      this.duration
+    )
   }
 }
 
@@ -118,4 +134,4 @@ function multAddClosestScaleNotes(noteArrays, scale) {
   }
   return noteArrays;
 }
-export { gen_mult_arrays, gen_mult_arrays_flat, getAllScaleNotes, genArraysArray, multAddClosestScaleNotes, RandomMidiCurves };
+export default RandomMidiCurves;
