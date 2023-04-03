@@ -32,7 +32,7 @@ class RandomMidiCurves {
       this.n_timesteps, 
       this.midi_min, 
       this.midi_max,
-      this.scaleNotes.getAllScaleNotes()
+      this.scaleNotes
     );
  
   }
@@ -85,7 +85,7 @@ function gen_mult_arrays(n, len, midi_min, midi_max) {
 
 function genCurveData(n, len, midi_min, midi_max, scale) {
   let noteArrays = gen_mult_arrays(n, len, midi_min, midi_max);
-  multAddClosestScaleNotes(noteArrays, scale);
+  multAddClosestScaleNotes(noteArrays, scale.getAllScaleNotes());
   return noteArrays;
 }
 
