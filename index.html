@@ -98,5 +98,74 @@
   <button name="plot-and-play-button" id="plot-and-play-button">🔊 Play 🔊</button>
   <br>
   <a href="https://github.com/urswilke/chaos_synthetization">Source code</a>
+  
+
+  <p>
+    <label><strong>Curve parameters</strong></label>
+    <label><input name="n_curves_input" type="number" value="5" placeholder="Enter number of curves (will delete all previous entries!)" /></label>
+<div class="clear"></div>
+</p>
+
+<button name="gen_para_tbl" id="gen_para_tbl">Generate parameter table for chosen no of curves</button>
+<p id="p_root_notes"></p>
+<p id="p_random_amplitudes"></p>
+<p id="p_note_checks"></p>
+
+<div class="curve_params_div">
+    <table id="curve_params_tbl" width="630" border="0">
+        <tr>
+            <td>midi</td>
+            <!-- <td width="20">Sex</td> -->
+            <td>random amplitude</td>
+            <td>C</td>
+            <td>C#</td>
+            <td>D</td>
+            <td>D#</td>
+            <td>E</td>
+            <td>F</td>
+            <td>F#</td>
+            <td>G</td>
+            <td>G#</td>
+            <td>A</td>
+            <td>A#</td>
+            <td>B</td>
+        </tr>
+    </table>
+</div>
+
+<div class="template" style="display: none">
+    <table>
+        <tr class="i_curve_params">
+            <td><input class="root_note" name="root_note" value="1" type="number" placeholder="Name"
+                    required="required" /></td>
+            <!-- <td>
+                 <select name="cand_sex" required="required">
+                    <option value=" "> </option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                 </select>
+              </td> -->
+              <td><input class="random_amplitude" name="random_amplitude" value="1" type="number" step="any" placeholder="Email" required="required" /></td>
+                <td><input type="checkbox" class="note_check" id="C" name="C" value=0 checked></td>
+                <td><input type="checkbox" class="note_check" id="C#" name="C#" value=1></td>
+                <td><input type="checkbox" class="note_check" id="D" name="D" value=2 checked></td>
+                <td><input type="checkbox" class="note_check" id="D#" name="D#" value=3></td>
+                <td><input type="checkbox" class="note_check" id="E" name="E" value=4 checked></td>
+                <td><input type="checkbox" class="note_check" id="F" name="F" value=5 checked></td>
+                <td><input type="checkbox" class="note_check" id="F#" name="F#" value=6></td>
+                <td><input type="checkbox" class="note_check" id="G" name="G" value=7 checked></td>
+                <td><input type="checkbox" class="note_check" id="G#" name="G#" value=8></td>
+                <td><input type="checkbox" class="note_check" id="A" name="A" value=9 checked></td>
+                <td><input type="checkbox" class="note_check" id="A#" name="A#" value=10></td>
+                <td><input type="checkbox" class="note_check" id="B" name="B" value=11 checked></td>
+        </tr>
+    </table>
+</div>
+<script src="jquery_functions.js"></script>
+<script>
+    document.getElementById("gen_para_tbl").addEventListener('click', get_inputs);
+</script>
+
+
   </body>
 </html>
