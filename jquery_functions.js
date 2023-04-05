@@ -23,6 +23,9 @@ function setup_table() {
     get_table_values();
 
 }
+export function sync_table_values() {
+    $(document).on("change", "td", get_table_values)
+}
 
 export function getChecked() {
     let ids = $("fieldset :checkbox")
