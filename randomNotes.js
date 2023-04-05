@@ -16,8 +16,25 @@ class ScaleNotes {
     );
   }
 }
+export class RandomMidiCurve {
+  constructor(ui_params) {
+    this.ui_params = ui_params;
+    this.update_curve_data(ui_params);
+  }
+  update_curve_data(ui_params = this.ui_params) {
+    this.scaleNotes = new ScaleNotes(ui_params.scale_notes, ui_params.midi_min, ui_params.midi_max);
+    this.curve_data = genCurveData(
+      ui_params.n_curves, 
+      ui_params.n_timesteps, 
+      ui_params.midi_min, 
+      ui_params.midi_max,
+      this.scaleNotes
+    );
+ 
+  }
+}
 
-export default class RandomMidiCurves {
+export class RandomMidiCurves {
   constructor(ui_params) {
     this.ui_params = ui_params;
     this.update_curve_data(ui_params);

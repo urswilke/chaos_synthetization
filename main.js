@@ -1,5 +1,6 @@
-import { add_table_rows, get_inputs, getChecked, set_inputs } from './jquery_functions.js'
-import RandomMidiCurves from "./randomNotes.js";
+import { update_table, getChecked, get_table_values } from './jquery_functions.js'
+import { RandomMidiCurves } from "./randomNotes.js";
+var ui_curve_params = {};
 
 function get_ui_params() {
   return {
@@ -31,6 +32,7 @@ function adaptToSelectedNotes() {
 
 document.getElementById("plot-and-play-button").addEventListener('click', adaptToSelectedNotes);
 
-add_table_rows()
+update_table();
 
-document.getElementById("gen_para_tbl").addEventListener('click', set_inputs);
+
+document.getElementById("gen_para_tbl").addEventListener('click', get_table_values);
