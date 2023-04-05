@@ -36,10 +36,10 @@ export function get_inputs() {
     let random_amplitudes = new Array();
     let note_checks = new Array();
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
-        let aa = $(this);
-        root_notes[countr] = Number(aa.find("input.root_note").val());
-        random_amplitudes[countr] = Number(aa.find("input.random_amplitude").val());
-        note_checks[countr] = aa
+        let row = $(this);
+        root_notes[countr] = Number(row.find("input.root_note").val());
+        random_amplitudes[countr] = Number(row.find("input.random_amplitude").val());
+        note_checks[countr] = row
             .find("input.note_check")
             .filter(function() {return this.checked;})
             .map(function() {return this.value;})
@@ -64,11 +64,11 @@ export function set_inputs() {
     let random_amplitudes = new Array();
     // let note_checks = new Array();
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
-        let aa = $(this);
+        let row = $(this);
         let r = rand_root_notes();
-        root_notes[countr] = Number(aa.find("input.root_note").val(r));
-        random_amplitudes[countr] = Number(aa.find("input.random_amplitude").val(Math.floor(r / 3)));
-        // note_checks[countr] = aa
+        root_notes[countr] = Number(row.find("input.root_note").val(r));
+        random_amplitudes[countr] = Number(row.find("input.random_amplitude").val(Math.floor(r / 3)));
+        // note_checks[countr] = row
         //     .find("input.note_check")
         //     .filter(function() {return this.checked;})
         //     .map(function() {return this.value;})
