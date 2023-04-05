@@ -3,8 +3,8 @@ import { getAllScaleNotes } from './randomNotes.js';
 export function update_table() {
     $('[name="n_curves_input"]').on('change', setup_table)
     // this also fires the function when ready in the beginning:
-    // (see here: https://stackoverflow.com/a/17247289)
-    .change();
+    // (see here: https://stackoverflow.com/a/28703262)
+    .trigger('change');
 }
 function setup_table() {
     // Not checking for Invalid input
