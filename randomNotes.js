@@ -17,7 +17,7 @@ class ScaleNotes {
   }
 }
 
-class RandomMidiCurves {
+export default class RandomMidiCurves {
   constructor(ui_params) {
     this.ui_params = ui_params;
     this.update_curve_data(ui_params);
@@ -95,7 +95,7 @@ function gen_mult_arrays_flat(noteArrays) {
 
 
 
-function getAllScaleNotes(steps, midi_min, midi_max, rootNote = 60) {
+export function getAllScaleNotes(steps, midi_min, midi_max, rootNote = 60) {
 
   let rootNoteMin = rootNote % 12;
   let i = rootNoteMin;
@@ -131,4 +131,3 @@ function multAddClosestScaleNotes(noteArrays, scale) {
   }
   return noteArrays;
 }
-export default RandomMidiCurves;

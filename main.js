@@ -1,14 +1,6 @@
-
+import { add_table_rows, get_inputs, getChecked, set_inputs } from './jquery_functions.js'
 import RandomMidiCurves from "./randomNotes.js";
 
-function getChecked() {
-  let ids = $("fieldset :checkbox")
-      .filter(function() {return this.checked;})
-      .map(function() {return this.value;})
-      .get()
-      .map(Number);
-  return ids;
-}
 function get_ui_params() {
   return {
     n_curves: Number(document.getElementById("n_curves").value),
@@ -39,3 +31,6 @@ function adaptToSelectedNotes() {
 
 document.getElementById("plot-and-play-button").addEventListener('click', adaptToSelectedNotes);
 
+add_table_rows()
+
+document.getElementById("gen_para_tbl").addEventListener('click', set_inputs);
