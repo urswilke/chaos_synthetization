@@ -1,4 +1,4 @@
-import { update_table, getChecked, get_table_values } from './jquery_functions.js'
+import { update_table, getChecked, get_table_values, sync_table_values } from './jquery_functions.js'
 import { RandomMidiCurves, gen_random_curves_array } from "./randomNotes.js";
 // var ui_curve_params = {};
 
