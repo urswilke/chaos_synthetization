@@ -1,7 +1,10 @@
 import { update_table, getChecked, get_table_values, sync_table_values } from './jquery_functions.js'
-import { RandomMidiCurves, gen_random_curves_array } from "./randomNotes.js";
+import { RandomMidiCurves, gen_random_curves_array, getAllScaleNotes } from "./randomNotes.js";
 import playMultipleSequences from './playNotes.js'
+import plotLines from "./plot.js";
+
 // var ui_curve_params = {};
+var ui_params = await get_ui_params();
 
 async function get_ui_params() {
   await update_table();
@@ -19,29 +22,51 @@ async function get_ui_params() {
   };
 }
 
-function gen_random_curves() {
-  ui_params = get_ui_params();
-  rmc.update_curve_data(ui_params);
-  rmc.plot();
-}
-var ui_params = await get_ui_params();
-const rmc = new RandomMidiCurves(ui_params) 
-rmc.plot();
-document.getElementById("gen-random-curves-button").addEventListener('click', gen_random_curves);
-
 
 
 
 
 document.getElementById("plot-and-play-button").addEventListener('click', adaptToSelectedNotes);
 
-// update_table();
-// sync_table_values();
-
 
 var oo = gen_random_curves_array(ui_params);
-console.log(oo)
 
 function adaptToSelectedNotes() {
   playMultipleSequences(oo.map((x) => x.midi_curve), ui_params.duration)
 }
+
+
+function iii(x) {
+  let elements = new Array(x.length);
+  for (let l = 0; l < x.length; l++) {
+    elements[l] = x[l].midi_curve
+      .map(function(el, i) {
+        return {
+          l,
+          i,
+          midi: el
+        }
+    });
+  }
+  return elements.flat();
+}
+let plot_data = iii(oo);
+plotLines(
+  document.body,
+  plot_data,
+  getAllScaleNotes(ui_params.scale_notes)
+)
+
+document.getElementById("gen-random-curves-button").addEventListener('click', gen_random_curves);
+function gen_random_curves() {
+  plotLines(
+    document.body,
+    plot_data,
+    getAllScaleNotes(ui_params.scale_notes)
+  )
+  // ui_params = get_ui_params();
+  // rmc.update_curve_data(ui_params);
+  // rmc.plot();
+}
+
+console.log(oo)
