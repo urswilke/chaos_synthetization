@@ -43,22 +43,31 @@ function transpose(obj) {
     return o
   });
 }
-export function gen_curve_params_objs(ui_params, ui_curve_params) {
-  let A = transpose(ui_curve_params);
-  const n_curves = ui_curve_params.root_notes.length;
-  res = new Array(n_curves);
+export function gen_random_curves_array(ui_params) {
+  let tbl = ui_params.ui_curve_params;
+  const n_curves = ui_params.n_curves;
+  let res = new Array(n_curves);
   for (let i_curve = 0; i_curve < n_curves; i_curve++) {
-    element[i_curve] = {...A[i], ...ui_params};
-    n_timesteps = element[i_curve].ui_params.n_timesteps;
-    amplitude = element[i_curve].ui_curve_params.random_amplitudes;
-    raw_curve = (perlin.generatePerlinNoise(1, n_timesteps) - 0.5) * 2;
-    root_note = element[i_curve].ui_curve_params.root_notes;
-    midi_curve = root_note + amplitude * raw_curve;
-    element[i_curve] = {...element[i_curve], ...{
-      raw_curve,
-      root_note,
-      midi_curve
-    }}
+    let element = {
+      scale_notes: tbl.note_checks[i_curve],
+      random_amplitude: tbl.random_amplitudes[i_curve],
+      root_note: tbl.root_notes[i_curve],
+      n_timesteps: ui_params.n_timesteps,
+      midi_min: ui_params.midi_min,
+      midi_max: ui_params.midi_max,
+    };
+    element.raw_curve = perlin.generatePerlinNoise(1, element.n_timesteps).map((x) => (x - 0.5) * 2);
+    element.midi_curve = element.raw_curve
+      .map((x) => element.root_note + element.random_amplitude * x)
+      .map((x) => getClosestScaleNote(
+        x, 
+        getAllScaleNotes(
+          element.scale_notes,
+          element.midi_min,
+          element.midi_max
+        )
+      ));
+    res[i_curve] = element;
   }
   return res;
 }

@@ -1,6 +1,6 @@
 import $ from "jquery";
 import { getAllScaleNotes } from './randomNotes.js';
-export function update_table() {
+export async function update_table() {
     $('[name="n_curves_input"]').on('change', setup_table)
     // this also fires the function when ready in the beginning:
     // (see here: https://stackoverflow.com/a/28703262)
@@ -20,14 +20,14 @@ function setup_table() {
         }
     }
     set_table_values();
-    get_table_values();
+    // get_table_values();
 
 }
-export function sync_table_values() {
-    $(document).on("change", "td", get_table_values)
-}
+// export async function sync_table_values() {
+//     $(document).on("change", "td", get_table_values)
+// }
 
-export function getChecked() {
+export async function getChecked() {
     let ids = $("fieldset :checkbox")
         .filter(function() {return this.checked;})
         .map(function() {return this.value;})
@@ -74,9 +74,11 @@ export function get_table_values() {
             .map(Number);
         countr += 1;
     });
-    window.ui_curve_params = {
+    const ui_curve_params = {
         root_notes,
         random_amplitudes,
         note_checks
     };
+    // window.ui_curve_params = ui_curve_params;
+    return ui_curve_params;
 }
