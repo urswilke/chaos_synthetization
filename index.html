@@ -6,39 +6,27 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script type="module" src="./main.js"></script>
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
-    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-    <script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script> -->
-    <!-- <script>
-      $( function() {
-        $( "#slider-range" ).slider({
-          range: true,
-          min: 24,
-          max: 120,
-          values: [ 36, 72 ],
-          slide: function( event, ui ) {
-            $( "#midi_range_string" ).val( ui.values[ 0 ] + " - " + ui.values[ 1 ] );        
-            $( "#midi_min_string" ).val( ui.values[ 0 ]);
-            $( "#midi_max_string" ).val( ui.values[ 1 ]);
-          }
-        });
-      });
-    </script> -->
     <script src="https://d3js.org/d3.v6.min.js"></script>
   </head>
   <body>
     <div id="app"></div>
-    <!-- <p>
-      <label for="midi_range_string">Midi note range:</label>
-      <input type="text" id="midi_range_string" readonly style="border:0; color:#f6931f; font-weight:bold;">
-    </p> -->
-     
+    <p>
+        <label>Enter number of curves<strong> (will delete all previous entries below!)</strong></label>
+        <input 
+            name="n_curves_input" 
+            id="n_curves" 
+            type="number" 
+            value="5" 
+            min="1" 
+            max="50"
+            placeholder="Enter number of curves"
+        />
+    <div class="clear"></div>
+    </p>
     <input type="text"  value="36" id="midi_min_string">
-<input type="text" value="72" id="midi_max_string">
-<!-- <div id="slider-range"></div> -->
-    <input id="n_curves" type="number" value="5" min="1" max="50">number of random curves</input>
-    <input id="n_timesteps" type="number" value="30" min="1" max="1000">number of time steps</input>
-    <input id="note_dur" type="number" value="0.5" min="0.1" max="10">note duration (in s)</input>
+    <input type="text" value="72" id="midi_max_string">
+    <input id="n_timesteps" class="sync" type="number" value="30" min="1" max="1000">number of time steps</input>
+    <input id="note_dur" class="sync" type="number" value="0.5" min="0.1" max="10">note duration (in s)</input>
   
       <fieldset id="scale_notes">
       <legend>Choose scale notes</legend>
@@ -100,11 +88,6 @@
   <a href="https://github.com/urswilke/chaos_synthetization">Source code</a>
   
 
-  <p>
-    <label>Enter number of curves<strong> (will delete all previous entries!)</strong></label>
-    <label><input name="n_curves_input" type="number" value="5" placeholder="Enter number of curves" /></label>
-<div class="clear"></div>
-</p>
 
 <button name="gen_para_tbl" id="gen_para_tbl">update curves with parameters from table</button>
 <p id="p_root_notes"></p>
@@ -115,7 +98,6 @@
     <table id="curve_params_tbl" width="630" border="0">
         <tr>
             <td>midi</td>
-            <!-- <td width="20">Sex</td> -->
             <td>random amplitude</td>
             <td>C</td>
             <td>C#</td>
@@ -136,16 +118,8 @@
 <div class="template" style="display: none">
     <table>
         <tr class="i_curve_params">
-            <td><input class="root_note" name="root_note" value="1" type="number" placeholder="Name"
-                    required="required" /></td>
-            <!-- <td>
-                 <select name="cand_sex" required="required">
-                    <option value=" "> </option>
-                    <option value="Male">Male</option>
-                    <option value="Female">Female</option>
-                 </select>
-              </td> -->
-              <td><input class="random_amplitude" name="random_amplitude" value="1" type="number" step="any" placeholder="Email" required="required" /></td>
+            <td><input class="root_note" name="root_note" value="1" type="number"/></td>
+              <td><input class="random_amplitude" name="random_amplitude" value="1" type="number" step="any"/></td>
                 <td><input type="checkbox" class="note_check" id="C" name="C" value=0 checked></td>
                 <td><input type="checkbox" class="note_check" id="C#" name="C#" value=1></td>
                 <td><input type="checkbox" class="note_check" id="D" name="D" value=2 checked></td>
