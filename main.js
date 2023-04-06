@@ -1,5 +1,6 @@
 import { update_table, getChecked, get_table_values, sync_table_values } from './jquery_functions.js'
 import { RandomMidiCurves, gen_random_curves_array } from "./randomNotes.js";
+import playMultipleSequences from './playNotes.js'
 // var ui_curve_params = {};
 
 async function get_ui_params() {
@@ -31,9 +32,6 @@ document.getElementById("gen-random-curves-button").addEventListener('click', ge
 
 
 
-function adaptToSelectedNotes() {
-    rmc.play();
-}
 
 document.getElementById("plot-and-play-button").addEventListener('click', adaptToSelectedNotes);
 
@@ -43,3 +41,7 @@ document.getElementById("plot-and-play-button").addEventListener('click', adaptT
 
 var oo = gen_random_curves_array(ui_params);
 console.log(oo)
+
+function adaptToSelectedNotes() {
+  playMultipleSequences(oo.map((x) => x.midi_curve), ui_params.duration)
+}
