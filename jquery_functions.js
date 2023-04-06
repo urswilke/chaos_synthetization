@@ -48,7 +48,7 @@ export function set_table_values() {
         let row = $(this);
         
         let midi = rand_root_notes();
-        let ampli = Math.floor(midi / 3);
+        let ampli = Math.floor(midi / 6);
         
         row.find("input.root_note").val(midi);
         row.find("input.random_amplitude").val(ampli);
