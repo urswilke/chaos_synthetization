@@ -16,24 +16,52 @@ class ScaleNotes {
     );
   }
 }
-export class RandomMidiCurve {
-  constructor(ui_params) {
-    this.ui_params = ui_params;
-    this.update_curve_data(ui_params);
-  }
-  update_curve_data(ui_params = this.ui_params) {
-    this.scaleNotes = new ScaleNotes(ui_params.scale_notes, ui_params.midi_min, ui_params.midi_max);
-    this.curve_data = genCurveData(
-      ui_params.n_curves, 
-      ui_params.n_timesteps, 
-      ui_params.midi_min, 
-      ui_params.midi_max,
-      this.scaleNotes
-    );
+// export class RandomMidiCurve {
+//   constructor(ui_params) {
+//     this.ui_params = ui_params;
+//     this.update_curve_data(ui_params);
+//   }
+//   update_curve_data(ui_params = this.ui_params) {
+//     this.scaleNotes = new ScaleNotes(ui_params.scale_notes, ui_params.midi_min, ui_params.midi_max);
+//     this.curve_data = genCurveData(
+//       ui_params.n_curves, 
+//       ui_params.n_timesteps, 
+//       ui_params.midi_min, 
+//       ui_params.midi_max,
+//       this.scaleNotes
+//     );
  
-  }
-}
+//   }
+// }
 
+function transpose(obj) {
+  // https://stackoverflow.com/a/42342757:
+  return Object.keys(obj).
+    map(function(e, i) {
+    var o = {}
+    Object.keys(obj).forEach((a, j) => o[a] = obj[a][i])
+    return o
+  });
+}
+export function gen_curve_params_objs(ui_params, ui_curve_params) {
+  let A = transpose(ui_curve_params);
+  const n_curves = ui_curve_params.root_notes.length;
+  res = new Array(n_curves);
+  for (let i_curve = 0; i_curve < n_curves; i_curve++) {
+    element[i_curve] = {...A[i], ...ui_params};
+    n_timesteps = element[i_curve].ui_params.n_timesteps;
+    amplitude = element[i_curve].ui_curve_params.random_amplitudes;
+    raw_curve = (perlin.generatePerlinNoise(1, n_timesteps) - 0.5) * 2;
+    root_note = element[i_curve].ui_curve_params.root_notes;
+    midi_curve = root_note + amplitude * raw_curve;
+    element[i_curve] = {...element[i_curve], ...{
+      raw_curve,
+      root_note,
+      midi_curve
+    }}
+  }
+  return res;
+}
 export class RandomMidiCurves {
   constructor(ui_params) {
     this.ui_params = ui_params;

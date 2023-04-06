@@ -1,5 +1,5 @@
 import { update_table, getChecked, sync_table_values } from './jquery_functions.js'
-import { RandomMidiCurves } from "./randomNotes.js";
+import { RandomMidiCurves, gen_curve_params_objs } from "./randomNotes.js";
 var ui_curve_params = {};
 
 function get_ui_params() {
@@ -34,3 +34,7 @@ document.getElementById("plot-and-play-button").addEventListener('click', adaptT
 
 update_table();
 sync_table_values();
+
+
+oo = gen_curve_params_objs(ui_params, ui_curve_params);
+console.log(oo)
