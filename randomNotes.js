@@ -52,3 +52,19 @@ function getClosestScaleNote(note, scale) {
   // from here: https://stackoverflow.com/a/35000557
   return scale.reduce((prev, curr) => Math.abs(curr - note) < Math.abs(prev - note) ? curr : prev);
 }
+
+
+export function create_plot_data(x) {
+  let elements = new Array(x.length);
+  for (let l = 0; l < x.length; l++) {
+    elements[l] = x[l].midi_curve
+      .map(function(el, i) {
+        return {
+          l,
+          i,
+          midi: el
+        }
+    });
+  }
+  return elements.flat();
+}

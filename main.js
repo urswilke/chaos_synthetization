@@ -1,5 +1,5 @@
 import { get_ui_params } from './jquery_functions.js'
-import { gen_random_curves_array, getAllScaleNotes } from "./randomNotes.js";
+import { gen_random_curves_array, getAllScaleNotes, create_plot_data } from "./randomNotes.js";
 import playMultipleSequences from './playNotes.js'
 import plotLines from "./plot.js";
 
@@ -22,20 +22,6 @@ function adaptToSelectedNotes() {
 }
 
 
-function create_plot_data(x) {
-  let elements = new Array(x.length);
-  for (let l = 0; l < x.length; l++) {
-    elements[l] = x[l].midi_curve
-      .map(function(el, i) {
-        return {
-          l,
-          i,
-          midi: el
-        }
-    });
-  }
-  return elements.flat();
-}
 let plot_data = create_plot_data(random_curve_data);
 async function gen_random_curves() {
   ui_params = await get_ui_params();
