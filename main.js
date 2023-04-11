@@ -1,4 +1,4 @@
-import { update_table, get_table_values } from './jquery_functions.js'
+import { get_ui_params } from './jquery_functions.js'
 import { gen_random_curves_array, getAllScaleNotes } from "./randomNotes.js";
 import playMultipleSequences from './playNotes.js'
 import plotLines from "./plot.js";
@@ -6,22 +6,8 @@ import plotLines from "./plot.js";
 var ui_params;
 
 
-async function get_ui_params() {
-  await update_table();
-  let ui_curve_params = await get_table_values();
-  let scale_notes = [];
-  ui_params = {
-    n_curves: Number(document.getElementById("n_curves").value),
-    n_timesteps: Number(document.getElementById("n_timesteps").value),
-    duration: Number(document.getElementById("note_dur").value) * 1000,
-    midi_min: Number(document.getElementById("midi_min_string").value),
-    midi_max: Number(document.getElementById("midi_max_string").value),
-    scale_notes,
-    ui_curve_params
-  };
-}
 
-await get_ui_params();
+ui_params = await get_ui_params();
 
 
 
@@ -52,7 +38,7 @@ function create_plot_data(x) {
 }
 let plot_data = create_plot_data(random_curve_data);
 async function gen_random_curves() {
-  await get_ui_params();
+  ui_params = await get_ui_params();
   plotLines(
     document.body,
     plot_data,

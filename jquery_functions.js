@@ -23,7 +23,7 @@ function setup_table() {
     // get_table_values();
 
 }
-export async function sync_table_values() {
+export function sync_table_values() {
     $(document).on("change", "td", get_table_values)
 }
 
@@ -69,3 +69,20 @@ export function get_table_values() {
     // window.ui_curve_params = ui_curve_params;
     return ui_curve_params;
 }
+
+
+export async function get_ui_params() {
+    await update_table();
+    let ui_curve_params = await get_table_values();
+    let scale_notes = [];
+    return {
+      n_curves: Number(document.getElementById("n_curves").value),
+      n_timesteps: Number(document.getElementById("n_timesteps").value),
+      duration: Number(document.getElementById("note_dur").value) * 1000,
+      midi_min: Number(document.getElementById("midi_min_string").value),
+      midi_max: Number(document.getElementById("midi_max_string").value),
+      scale_notes,
+      ui_curve_params
+    };
+  }
+  
