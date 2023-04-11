@@ -51,11 +51,7 @@ function iii(x) {
   return elements.flat();
 }
 let plot_data = iii(oo);
-plotLines(
-  document.body,
-  plot_data,
-  getAllScaleNotes(ui_params.scale_notes)
-)
+gen_random_curves()
 
 document.getElementById("gen-random-curves-button").addEventListener('click', gen_random_curves);
 function gen_random_curves() {
