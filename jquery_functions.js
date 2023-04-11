@@ -34,8 +34,6 @@ function rand_root_notes() {
     return items[Math.floor(Math.random() * items.length)];
 }
 export function set_table_values() {
-    let countr = 0;
-    // let note_checks = new Array();
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
         let row = $(this);
         
@@ -44,27 +42,24 @@ export function set_table_values() {
         
         row.find("input.root_note").val(midi);
         row.find("input.random_amplitude").val(ampli);
-        
-        countr += 1;
     });
 }
 
 export function get_table_values() {
-    let countr = 0;
-    let root_notes = new Array();
-    let random_amplitudes = new Array();
-    let note_checks = new Array();
+    let root_notes = [];
+    let random_amplitudes = [];
+    let note_checks = [];
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
         let row = $(this);
-        root_notes[countr] = Number(row.find("input.root_note").val());
-        random_amplitudes[countr] = Number(row.find("input.random_amplitude").val());
-        note_checks[countr] = row
+        root_notes.push(Number(row.find("input.root_note").val()));
+        random_amplitudes.push(Number(row.find("input.random_amplitude").val()));
+        note_checks.push(row
             .find("input.note_check")
             .filter(function() {return this.checked;})
             .map(function() {return this.value;})
             .get()
-            .map(Number);
-        countr += 1;
+            .map(Number)
+        );
     });
     const ui_curve_params = {
         root_notes,
