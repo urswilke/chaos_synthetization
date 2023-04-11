@@ -1,16 +1,14 @@
-import { update_table, get_table_values, sync_table_values } from './jquery_functions.js'
+import { update_table, get_table_values } from './jquery_functions.js'
 import { gen_random_curves_array, getAllScaleNotes } from "./randomNotes.js";
 import playMultipleSequences from './playNotes.js'
 import plotLines from "./plot.js";
 
-// var ui_curve_params = {};
 var ui_params;
 
 
 async function get_ui_params() {
   await update_table();
   let ui_curve_params = await get_table_values();
-  // await sync_table_values();
   let scale_notes = [];
   ui_params = {
     n_curves: Number(document.getElementById("n_curves").value),
@@ -60,11 +58,7 @@ async function gen_random_curves() {
     plot_data,
     getAllScaleNotes(ui_params.scale_notes)
   )
-  // ui_params = get_ui_params();
-  // rmc.update_curve_data(ui_params);
-  // rmc.plot();
 }
-// gen_random_curves()
 
 document.getElementById("gen-random-curves-button").addEventListener('click', gen_random_curves);
 
