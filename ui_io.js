@@ -1,27 +1,21 @@
 import $ from "jquery";
 import { getAllScaleNotes } from './randomNotes.js';
-export async function update_table() {
-    $('[name="n_curves_input"]').on('change', setup_table)
+export function setup_table() {
+    $('[name="n_curves_input"]').on('change', setup_table_helper)
     // this also fires the function when ready in the beginning:
     // (see here: https://stackoverflow.com/a/28703262)
     .trigger('change');
 }
-function setup_table() {
-    // Not checking for Invalid input
-    if (this.value != '') {
-        let val = parseInt(this.value, 10);
+export function setup_table_helper() {
+    let val = parseInt(this.value, 10);
 
-        $('#curve_params_tbl tbody').find("tr:gt(0)").remove();
-        for (let i = 0; i < val; i++) {
-            // Clone the Template
-            let $cloned = $('.template tbody').clone();
-            // For each Candidate append the template row
-            $('#curve_params_tbl tbody').append($cloned.html());
-        }
+    $('#curve_params_tbl tbody').find("tr:gt(0)").remove();
+    for (let i = 0; i < val; i++) {
+        // Clone the Template
+        let $cloned = $('.template tbody').clone();
+        // For each Candidate append the template row
+        $('#curve_params_tbl tbody').append($cloned.html());
     }
-    set_table_values();
-    // get_table_values();
-
 }
 export function sync_table_values() {
     $(document).on("change", "td", get_table_values)
@@ -71,9 +65,10 @@ export function get_table_values() {
 }
 
 
-export async function get_ui_params() {
-    await update_table();
-    let ui_curve_params = await get_table_values();
+export function get_ui_params() {
+    setup_table();
+    set_table_values();
+    let ui_curve_params = get_table_values();
     let scale_notes = [];
     return {
       n_curves: Number(document.getElementById("n_curves").value),
