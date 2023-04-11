@@ -27,14 +27,6 @@ export async function sync_table_values() {
     $(document).on("change", "td", get_table_values)
 }
 
-export async function getChecked() {
-    let ids = $("fieldset :checkbox")
-        .filter(function() {return this.checked;})
-        .map(function() {return this.value;})
-        .get()
-        .map(Number);
-    return ids;
-}
   
 function rand_root_notes() {
     let items = getAllScaleNotes([0, 7], 36, 84);

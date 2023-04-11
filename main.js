@@ -1,4 +1,4 @@
-import { update_table, getChecked, get_table_values, sync_table_values } from './jquery_functions.js'
+import { update_table, get_table_values, sync_table_values } from './jquery_functions.js'
 import { RandomMidiCurves, gen_random_curves_array, getAllScaleNotes } from "./randomNotes.js";
 import playMultipleSequences from './playNotes.js'
 import plotLines from "./plot.js";
@@ -10,7 +10,7 @@ async function get_ui_params() {
   await update_table();
   let ui_curve_params = await get_table_values();
   // await sync_table_values();
-  let scale_notes = await getChecked();
+  let scale_notes = [];
   return {
     n_curves: Number(document.getElementById("n_curves").value),
     n_timesteps: Number(document.getElementById("n_timesteps").value),
