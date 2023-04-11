@@ -2,6 +2,7 @@ import { get_ui_params } from './ui_io.js'
 import { gen_random_curves_array, getAllScaleNotes, create_plot_data } from "./randomNotes.js";
 import playMultipleSequences from './playNotes.js'
 import plotLines from "./plot.js";
+import $ from "jquery";
 
 var ui_params;
 
@@ -12,7 +13,9 @@ ui_params = await get_ui_params();
 
 
 
-document.getElementById("plot-and-play-button").addEventListener('click', adaptToSelectedNotes);
+$("#plot-and-play-button").on('click', function(){
+  adaptToSelectedNotes();
+}); 
 
 
 var random_curve_data = gen_random_curves_array(ui_params);
@@ -32,6 +35,8 @@ async function gen_random_curves() {
   )
 }
 
-document.getElementById("gen-random-curves-button").addEventListener('click', gen_random_curves);
+$("#gen-random-curves-button").on('click', function(){
+  gen_random_curves();
+}); 
 
 console.log(random_curve_data)
