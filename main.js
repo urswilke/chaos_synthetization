@@ -1,5 +1,5 @@
 import { update_table, get_table_values, sync_table_values } from './jquery_functions.js'
-import { RandomMidiCurves, gen_random_curves_array, getAllScaleNotes } from "./randomNotes.js";
+import { gen_random_curves_array, getAllScaleNotes } from "./randomNotes.js";
 import playMultipleSequences from './playNotes.js'
 import plotLines from "./plot.js";
 
