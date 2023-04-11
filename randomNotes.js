@@ -14,6 +14,16 @@ export function gen_random_curves_array(ui_params) {
       midi_max: ui_params.midi_max,
     };
     element.raw_curve = perlin.generatePerlinNoise(1, element.n_timesteps).map((x) => (x - 0.5) * 2);
+    res[i_curve] = element;
+  }
+  return res;
+}
+
+export function gen_midi_curves_array(random_curve_data) {
+  const n_curves = random_curve_data.length;
+  let res = new Array(n_curves);
+  for (let i_curve = 0; i_curve < n_curves; i_curve++) {
+    let element = random_curve_data[i_curve]
     element.midi_curve = element.raw_curve
       .map((x) => element.root_note + element.random_amplitude * x)
       .map((x) => getClosestScaleNote(

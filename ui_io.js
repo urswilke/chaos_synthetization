@@ -1,24 +1,13 @@
 import $ from "jquery";
 import { getAllScaleNotes } from './randomNotes.js';
-export function setup_table() {
-    $('[name="n_curves_input"]').on('change', setup_table_helper)
-    // this also fires the function when ready in the beginning:
-    // (see here: https://stackoverflow.com/a/28703262)
-    .trigger('change');
-}
-export function setup_table_helper() {
-    let val = parseInt(this.value, 10);
-
+export function setup_table(n_curves) {
     $('#curve_params_tbl tbody').find("tr:gt(0)").remove();
-    for (let i = 0; i < val; i++) {
+    for (let i = 0; i < n_curves; i++) {
         // Clone the Template
         let $cloned = $('.template tbody').clone();
         // For each Candidate append the template row
         $('#curve_params_tbl tbody').append($cloned.html());
     }
-}
-export function sync_table_values() {
-    $(document).on("change", "td", get_table_values)
 }
 
   
@@ -66,12 +55,13 @@ export function get_table_values() {
 
 
 export function get_ui_params() {
-    setup_table();
+    let n_curves = Number(document.getElementById("n_curves").value);
+    setup_table(n_curves);
     set_table_values();
     let ui_curve_params = get_table_values();
     let scale_notes = [];
     return {
-      n_curves: Number(document.getElementById("n_curves").value),
+      n_curves,
       n_timesteps: Number(document.getElementById("n_timesteps").value),
       duration: Number(document.getElementById("note_dur").value) * 1000,
       midi_min: Number(document.getElementById("midi_min_string").value),
