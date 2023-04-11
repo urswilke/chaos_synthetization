@@ -4,14 +4,15 @@ import playMultipleSequences from './playNotes.js'
 import plotLines from "./plot.js";
 
 // var ui_curve_params = {};
-var ui_params = await get_ui_params();
+var ui_params;
+
 
 async function get_ui_params() {
   await update_table();
   let ui_curve_params = await get_table_values();
   // await sync_table_values();
   let scale_notes = [];
-  return {
+  ui_params = {
     n_curves: Number(document.getElementById("n_curves").value),
     n_timesteps: Number(document.getElementById("n_timesteps").value),
     duration: Number(document.getElementById("note_dur").value) * 1000,
@@ -22,6 +23,7 @@ async function get_ui_params() {
   };
 }
 
+await get_ui_params();
 
 
 
@@ -51,7 +53,8 @@ function create_plot_data(x) {
   return elements.flat();
 }
 let plot_data = create_plot_data(random_curve_data);
-function gen_random_curves() {
+async function gen_random_curves() {
+  await get_ui_params();
   plotLines(
     document.body,
     plot_data,
