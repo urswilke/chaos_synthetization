@@ -29,14 +29,14 @@ async function get_ui_params() {
 document.getElementById("plot-and-play-button").addEventListener('click', adaptToSelectedNotes);
 
 
-var oo = gen_random_curves_array(ui_params);
+var random_curve_data = gen_random_curves_array(ui_params);
 
 function adaptToSelectedNotes() {
-  playMultipleSequences(oo.map((x) => x.midi_curve), ui_params.duration)
+  playMultipleSequences(random_curve_data.map((x) => x.midi_curve), ui_params.duration)
 }
 
 
-function iii(x) {
+function create_plot_data(x) {
   let elements = new Array(x.length);
   for (let l = 0; l < x.length; l++) {
     elements[l] = x[l].midi_curve
@@ -50,10 +50,7 @@ function iii(x) {
   }
   return elements.flat();
 }
-let plot_data = iii(oo);
-gen_random_curves()
-
-document.getElementById("gen-random-curves-button").addEventListener('click', gen_random_curves);
+let plot_data = create_plot_data(random_curve_data);
 function gen_random_curves() {
   plotLines(
     document.body,
@@ -64,5 +61,8 @@ function gen_random_curves() {
   // rmc.update_curve_data(ui_params);
   // rmc.plot();
 }
+// gen_random_curves()
 
-console.log(oo)
+document.getElementById("gen-random-curves-button").addEventListener('click', gen_random_curves);
+
+console.log(random_curve_data)
