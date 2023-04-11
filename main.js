@@ -1,4 +1,4 @@
-import { get_ui_params } from './jquery_functions.js'
+import { get_ui_params } from './ui_io.js'
 import { gen_random_curves_array, getAllScaleNotes, create_plot_data } from "./randomNotes.js";
 import playMultipleSequences from './playNotes.js'
 import plotLines from "./plot.js";
