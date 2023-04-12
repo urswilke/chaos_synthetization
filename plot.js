@@ -7,22 +7,22 @@ export default function plotLines(parent, data, allScaleNotes) {
         marks: [
             Plot.ruleY(allScaleNotes, { stroke: "red", strokeWidth: 0.2 }),
             Plot.line(data, {
-                x: "i",
+                x: "t",
                 y: "midi",
                 curve: "step",
-                stroke: "l"
+                stroke: "i"
             }),
             Plot.dot(data, {
-                x: "i",
+                x: "t",
                 y: "r",
-                stroke: "l",
+                stroke: "i",
                 r: 0.5
             }),
             Plot.text(data, Plot.selectLast({
-                x: "i",
+                x: "t",
                 y: "midi",
-                z: "l",
-                text: "l",
+                z: "i",
+                text: "i",
                 textAnchor: "start",
                 dx: 3
             }))

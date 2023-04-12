@@ -66,12 +66,12 @@ function getClosestScaleNote(note, scale) {
 
 export function create_plot_data(x) {
   let elements = new Array(x.length);
-  for (let l = 0; l < x.length; l++) {
-    elements[l] = x[l].midi_curve
-      .map(function(el, i) {
+  for (let i = 0; i < x.length; i++) {
+    elements[i] = x[i].midi_curve
+      .map(function(el, t) {
         return {
-          l,
           i,
+          t,
           midi: el
         }
     });
