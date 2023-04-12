@@ -1,6 +1,6 @@
 import perlin from 'perlin-noise' ;
 
-export function gen_curves_array(random_curve_data, ui_params) {
+export function add_random_curves(random_curve_data, ui_params) {
   let tbl = ui_params.ui_curve_params;
   const n_curves = ui_params.n_curves;
   for (let i_curve = 0; i_curve < n_curves; i_curve++) {
@@ -18,7 +18,7 @@ export function gen_curves_array(random_curve_data, ui_params) {
   return random_curve_data;
 }
 
-export function add_random_curves_array(ui_params) {
+export function gen_random_curves_array(ui_params) {
   const n_curves = ui_params.n_curves;
   let res = new Array(n_curves);
   for (let i_curve = 0; i_curve < n_curves; i_curve++) {
@@ -28,7 +28,7 @@ export function add_random_curves_array(ui_params) {
   return res;
 }
 
-export function gen_midi_curves_array(random_curve_data) {
+export function add_midi_curves(random_curve_data) {
   const n_curves = random_curve_data.length;
   let res = new Array(n_curves);
   for (let i_curve = 0; i_curve < n_curves; i_curve++) {

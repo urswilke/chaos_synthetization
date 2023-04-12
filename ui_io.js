@@ -28,7 +28,7 @@ export function set_table_values() {
     });
 }
 
-export function add_table_values(ui_params) {
+export function add_table_ui_params(ui_params) {
     let root_notes = [];
     let random_amplitudes = [];
     let note_checks = [];
@@ -54,7 +54,7 @@ export function add_table_values(ui_params) {
 }
 
 
-export function get_ui_params() {
+export function get_main_ui_params() {
     let n_curves = Number(document.getElementById("n_curves").value);
     setup_table(n_curves);
     set_table_values();
