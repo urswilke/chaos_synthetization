@@ -12,7 +12,7 @@ export function add_random_curves(random_curve_data, ui_params) {
       midi_min: ui_params.midi_min,
       midi_max: ui_params.midi_max,
     };
-    random_curve_data[i_curve] = { ...element, ...random_curve_data[i_curve] };
+    random_curve_data[i_curve] = { ...random_curve_data[i_curve], ...element};
   }
   return random_curve_data;
 }
