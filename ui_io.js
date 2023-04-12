@@ -28,7 +28,7 @@ export function set_table_values() {
     });
 }
 
-export function get_table_values() {
+export function add_table_values(ui_params) {
     let root_notes = [];
     let random_amplitudes = [];
     let note_checks = [];
@@ -44,13 +44,13 @@ export function get_table_values() {
             .map(Number)
         );
     });
-    const ui_curve_params = {
+    ui_params.ui_curve_params = {
         root_notes,
         random_amplitudes,
         note_checks
     };
     // window.ui_curve_params = ui_curve_params;
-    return ui_curve_params;
+    return ui_params;
 }
 
 
@@ -58,7 +58,7 @@ export function get_ui_params() {
     let n_curves = Number(document.getElementById("n_curves").value);
     setup_table(n_curves);
     set_table_values();
-    let ui_curve_params = get_table_values();
+    // let ui_curve_params = get_table_values();
     let scale_notes = [];
     return {
       n_curves,
@@ -67,7 +67,7 @@ export function get_ui_params() {
       midi_min: Number(document.getElementById("midi_min_string").value),
       midi_max: Number(document.getElementById("midi_max_string").value),
       scale_notes,
-      ui_curve_params
+    //   ui_curve_params
     };
   }
   
