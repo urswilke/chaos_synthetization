@@ -12,8 +12,7 @@ export function add_random_curves(random_curve_data, ui_params) {
       midi_min: ui_params.midi_min,
       midi_max: ui_params.midi_max,
     };
-    // element.raw_curve = perlin.generatePerlinNoise(1, element.n_timesteps).map((x) => (x - 0.5) * 2);
-    random_curve_data[i_curve] = { ...random_curve_data[i_curve], ...element};
+    random_curve_data[i_curve] = { ...element, ...random_curve_data[i_curve] };
   }
   return random_curve_data;
 }
@@ -48,12 +47,7 @@ export function add_midi_curves(random_curve_data) {
   return res;
 }
 
-export function getAllScaleNotes(steps, midi_min, midi_max, rootNote = 60) {
-
-  let rootNoteMin = rootNote % 12;
-  let i = rootNoteMin;
-  let i2 = 0;
-  let x = [];
+export function getAllScaleNotes(steps, midi_min, midi_max) {
   // from here: https://stackoverflow.com/a/50672288
   let repeatedArray = [].concat(...Array(11).fill(steps));
   let octaveArray = [];
