@@ -1,9 +1,8 @@
 import perlin from 'perlin-noise' ;
 
-export function gen_random_curves_array(ui_params) {
+export function gen_curves_array(random_curve_data, ui_params) {
   let tbl = ui_params.ui_curve_params;
   const n_curves = ui_params.n_curves;
-  let res = new Array(n_curves);
   for (let i_curve = 0; i_curve < n_curves; i_curve++) {
     let element = {
       scale_notes: tbl.note_checks[i_curve],
@@ -13,8 +12,18 @@ export function gen_random_curves_array(ui_params) {
       midi_min: ui_params.midi_min,
       midi_max: ui_params.midi_max,
     };
-    element.raw_curve = perlin.generatePerlinNoise(1, element.n_timesteps).map((x) => (x - 0.5) * 2);
-    res[i_curve] = element;
+    // element.raw_curve = perlin.generatePerlinNoise(1, element.n_timesteps).map((x) => (x - 0.5) * 2);
+    random_curve_data[i_curve] = { ...random_curve_data[i_curve], ...element};
+  }
+  return random_curve_data;
+}
+
+export function add_random_curves_array(ui_params) {
+  const n_curves = ui_params.n_curves;
+  let res = new Array(n_curves);
+  for (let i_curve = 0; i_curve < n_curves; i_curve++) {
+    res[i_curve] = {};
+    res[i_curve].raw_curve = perlin.generatePerlinNoise(1, ui_params.n_timesteps).map((x) => (x - 0.5) * 2);
   }
   return res;
 }
