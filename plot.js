@@ -23,6 +23,7 @@ export default function plotLines(parent, data, allScaleNotes) {
                 y: "midi",
                 z: "i",
                 text: "i",
+                fill: "i",
                 textAnchor: "start",
                 dx: 3
             }))
