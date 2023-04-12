@@ -21,13 +21,14 @@
             min="1" 
             max="50"
             placeholder="Enter number of curves"
+            size="4"
         />
     <div class="clear"></div>
     </p>
-    <input type="text" class="sync"  value="36" id="midi_min_string">
-    <input type="text" class="sync" value="72" id="midi_max_string">
-    <input id="n_timesteps" class="sync" type="number" value="30" min="1" max="1000">number of time steps</input>
-    <input id="note_dur" class="sync" type="number" value="0.5" min="0.1" max="10">note duration (in s)</input>
+    <input type="text" class="sync"  value="36" id="midi_min_string" size="4">
+    <input type="text" class="sync" value="72" id="midi_max_string" size="4">
+    <input id="n_timesteps" class="sync" type="number" value="30" min="1" max="1000" size="4">number of time steps</input>
+    <input id="note_dur" class="sync" type="number" value="0.5" min="0.1" max="10" size="4">note duration (in s)</input>
   
     <div class="curve_params_div">
       <table id="curve_params_tbl" width="630" border="0">
@@ -53,8 +54,8 @@
   <div class="template" style="display: none">
       <table>
           <tr class="i_curve_params">
-              <td><input class="root_note" value="1" type="number"/></td>
-                <td><input class="random_amplitude" value="1" type="number" step="any"/></td>
+              <td><input class="root_note" value="1" type="number" size="4"/></td>
+                <td><input class="random_amplitude" value="1" type="number" step="any" size="4"/></td>
                   <td><input type="checkbox" class="note_check" id="C" value=0 checked></td>
                   <td><input type="checkbox" class="note_check" id="C#" value=1></td>
                   <td><input type="checkbox" class="note_check" id="D" value=2 checked></td>
