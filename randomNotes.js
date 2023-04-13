@@ -32,8 +32,9 @@ export function add_midi_curves(random_curve_data) {
   let res = new Array(n_curves);
   for (let i_curve = 0; i_curve < n_curves; i_curve++) {
     let element = random_curve_data[i_curve]
-    element.midi_curve = element.raw_curve
-      .map((x) => element.root_note + element.random_amplitude * x)
+    element.scaled_random_curve = element.raw_curve
+      .map((x) => element.root_note + element.random_amplitude * x);
+    element.midi_curve = element.scaled_random_curve
       .map((x) => getClosestScaleNote(
         x, 
         getAllScaleNotes(
@@ -75,7 +76,8 @@ export function create_plot_data(x) {
         return {
           i,
           t,
-          midi: el
+          midi: el,
+          scaled_random: x[i].scaled_random_curve[t]
         }
     });
   }

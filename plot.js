@@ -14,7 +14,7 @@ export default function plotLines(parent, data, allScaleNotes) {
             }),
             Plot.dot(data, {
                 x: "t",
-                y: "r",
+                y: "scaled_random",
                 stroke: "i",
                 r: 0.5
             }),
