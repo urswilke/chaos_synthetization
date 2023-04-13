@@ -26,7 +26,7 @@ function update_curves() {
 plot_curves();
 
 async function playMidi() {
-  await playMultipleSequences(random_curve_data, ui_params.duration)
+  await playMultipleSequences(random_curve_data)
 }
 
 $(document).on("change", ".reload", plot_curves)

@@ -11,6 +11,7 @@ export function add_random_curves(random_curve_data, ui_params) {
       n_timesteps: ui_params.n_timesteps,
       midi_min: ui_params.midi_min,
       midi_max: ui_params.midi_max,
+      duration: ui_params.duration
     };
     random_curve_data[i_curve] = { ...random_curve_data[i_curve], ...element};
   }
