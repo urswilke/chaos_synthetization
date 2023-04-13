@@ -29,7 +29,7 @@ async function adaptToSelectedNotes() {
   await playMultipleSequences(random_curve_data.map((x) => x.midi_curve), ui_params.duration)
 }
 
-$(document).on("change", ".sync", plot_curves)
+$(document).on("change", ".reload", plot_curves)
 $(document).on("change", "td, #show-scaled-random", update_curves)
 $("#plot-and-play-button").on('click', adaptToSelectedNotes); 
 
