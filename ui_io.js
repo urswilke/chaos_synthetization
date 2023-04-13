@@ -11,8 +11,7 @@ export function setup_table(n_curves) {
 }
 
   
-function rand_root_notes() {
-    let items = getAllScaleNotes([0, 7], 36, 84);
+function sample1(items) {
     // https://stackoverflow.com/a/5915122
     return items[Math.floor(Math.random() * items.length)];
 }
@@ -20,7 +19,7 @@ export function set_table_values() {
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
         let row = $(this);
         
-        let midi = rand_root_notes();
+        let midi = sample1(getAllScaleNotes([0, 7], 36, 84));
         let ampli = Math.floor(midi / 6);
         
         row.find("input.root_note").val(midi);
