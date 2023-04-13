@@ -1,106 +1,54 @@
-import plotLines from "./plot.js";
-import playMultipleSequences from './playNotes.js'
 import perlin from 'perlin-noise' ;
 
-class ScaleNotes {
-  constructor(scale_notes, midi_min, midi_max) {
-    this.scale_notes = scale_notes;
-    this.midi_min = midi_min;
-    this.midi_max = midi_max;
+export function add_random_curves(random_curve_data, ui_params) {
+  let tbl = ui_params.ui_curve_params;
+  const n_curves = ui_params.n_curves;
+  for (let i_curve = 0; i_curve < n_curves; i_curve++) {
+    let element = {
+      scale_notes: tbl.note_checks[i_curve],
+      random_amplitude: tbl.random_amplitudes[i_curve],
+      root_note: tbl.root_notes[i_curve],
+      n_timesteps: ui_params.n_timesteps,
+      midi_min: ui_params.midi_min,
+      midi_max: ui_params.midi_max,
+    };
+    random_curve_data[i_curve] = { ...random_curve_data[i_curve], ...element};
   }
-  getAllScaleNotes() {
-    return getAllScaleNotes(
-      this.scale_notes,
-      this.midi_min,
-      this.midi_max,
-    );
-  }
+  return random_curve_data;
 }
 
-class RandomMidiCurves {
-  constructor(ui_params) {
-    this.ui_params = ui_params;
-    this.update_curve_data(ui_params);
-  }
-  update_curve_data(ui_params = this.ui_params) {
-    this.scaleNotes = new ScaleNotes(ui_params.scale_notes, ui_params.midi_min, ui_params.midi_max);
-    this.curve_data = genCurveData(
-      ui_params.n_curves, 
-      ui_params.n_timesteps, 
-      ui_params.midi_min, 
-      ui_params.midi_max,
-      this.scaleNotes
-    );
- 
-  }
-  flattenCurveData() {
-    return gen_mult_arrays_flat(this.curve_data);
-  }
-  extractMidiArrays() {
-    return genArraysArray(this.curve_data);
-  }
-  plot() {
-    plotLines(
-      document.body, 
-      this.flattenCurveData(), 
-      this.scaleNotes.getAllScaleNotes()
-    );
-  }
-  play() {
-    playMultipleSequences(
-      this.extractMidiArrays(), 
-      this.ui_params.duration
-    )
-  }
-}
-function genPerlinSequence(len, midi_min, midi_max) {
-  return perlin.generatePerlinNoise(1, len).map(x => (x) * (midi_max - midi_min) + midi_min);
-
-}
-  
-function gen_obj_arr(len, midi_min, midi_max) {
-    let arr = genPerlinSequence(len, midi_min, midi_max);
-    var x = new Array(arr.length);
-    for (var i = 0; i < arr.length; i++) {
-        x[i] = {i: i, r: arr[i]};
-    }
-    return x
-}
-
-function gen_mult_arrays(n, len, midi_min, midi_max) {
-  let res = new Array(n);
-  for (var i = 0; i < n; i++) {
-    let x = gen_obj_arr(len, midi_min, midi_max);
-    res[i] = [i.toString(), x];
+export function gen_random_curves_array(ui_params) {
+  const n_curves = ui_params.n_curves;
+  let res = new Array(n_curves);
+  for (let i_curve = 0; i_curve < n_curves; i_curve++) {
+    res[i_curve] = {};
+    res[i_curve].raw_curve = perlin.generatePerlinNoise(1, ui_params.n_timesteps).map((x) => (x - 0.5) * 2);
   }
   return res;
 }
 
-function genCurveData(n, len, midi_min, midi_max, scale) {
-  let noteArrays = gen_mult_arrays(n, len, midi_min, midi_max);
-  multAddClosestScaleNotes(noteArrays, scale.getAllScaleNotes());
-  return noteArrays;
+export function add_midi_curves(random_curve_data) {
+  const n_curves = random_curve_data.length;
+  let res = new Array(n_curves);
+  for (let i_curve = 0; i_curve < n_curves; i_curve++) {
+    let element = random_curve_data[i_curve]
+    element.scaled_random_curve = element.raw_curve
+      .map((x) => element.root_note + element.random_amplitude * x);
+    element.midi_curve = element.scaled_random_curve
+      .map((x) => getClosestScaleNote(
+        x, 
+        getAllScaleNotes(
+          element.scale_notes,
+          element.midi_min,
+          element.midi_max
+        )
+      ));
+    res[i_curve] = element;
+  }
+  return res;
 }
 
-function extractArray(arrayElement) {
-  return arrayElement[1].map(a => a.midi);
-}
-function genArraysArray(noteArrays) {
-  return noteArrays.map(extractArray);
-}
-function gen_mult_arrays_flat(noteArrays) {
-  return noteArrays.
-    flatMap(([l, noteArrays]) => noteArrays.map(d => ({l, ...d})))
-}
-
-
-
-function getAllScaleNotes(steps, midi_min, midi_max, rootNote = 60) {
-
-  let rootNoteMin = rootNote % 12;
-  let i = rootNoteMin;
-  let i2 = 0;
-  let x = [];
+export function getAllScaleNotes(steps, midi_min, midi_max) {
   // from here: https://stackoverflow.com/a/50672288
   let repeatedArray = [].concat(...Array(11).fill(steps));
   let octaveArray = [];
@@ -118,17 +66,20 @@ function getClosestScaleNote(note, scale) {
   // from here: https://stackoverflow.com/a/35000557
   return scale.reduce((prev, curr) => Math.abs(curr - note) < Math.abs(prev - note) ? curr : prev);
 }
-function addClosestScaleNotes(notes, scale) {
-  // return notes[1].map(obj => ({ ...obj, midi: getClosestScaleNote(scale, obj.r) }));
-  for (let i = 0; i < notes[1].length; i++) {
-    notes[1][i].midi = getClosestScaleNote(notes[1][i].r, scale)
+
+
+export function create_plot_data(x) {
+  let elements = new Array(x.length);
+  for (let i = 0; i < x.length; i++) {
+    elements[i] = x[i].midi_curve
+      .map(function(el, t) {
+        return {
+          i,
+          t,
+          midi: el,
+          scaled_random: x[i].scaled_random_curve[t]
+        }
+    });
   }
-  return notes;
+  return elements.flat();
 }
-function multAddClosestScaleNotes(noteArrays, scale) {
-  for (let i = 0; i < noteArrays.length; i++) {
-    noteArrays[i] = addClosestScaleNotes(noteArrays[i], scale);
-  }
-  return noteArrays;
-}
-export default RandomMidiCurves;

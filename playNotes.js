@@ -1,6 +1,7 @@
 import { loadSoundfont, startPresetNote } from 'sfumato';
 
 const sf2 = await loadSoundfont(
+  // 'https://raw.githubusercontent.com/surikov/webaudiofontdata/master/sf2/Acoustic%20Guitar.sf2'
   'https://raw.githubusercontent.com/felixroos/felixroos.github.io/main/public/Earthbound_NEW.sf2'
 )
 

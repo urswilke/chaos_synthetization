@@ -1,41 +1,36 @@
+import { get_main_ui_params, add_table_ui_params, setup_table, set_table_values } from './ui_io.js'
+import { getAllScaleNotes, create_plot_data, add_midi_curves, gen_random_curves_array, add_random_curves } from "./randomNotes.js";
+import playMultipleSequences from './playNotes.js'
+import plotLines from "./plot.js";
+import $ from "jquery";
 
-import RandomMidiCurves from "./randomNotes.js";
-
-function getChecked() {
-  let ids = $("fieldset :checkbox")
-      .filter(function() {return this.checked;})
-      .map(function() {return this.value;})
-      .get()
-      .map(Number);
-  return ids;
+var ui_params;
+var random_curve_data;
+function plot_curves() {
+  ui_params = get_main_ui_params();
+  ui_params = add_table_ui_params(ui_params);
+  random_curve_data = gen_random_curves_array(ui_params);
+  update_curves();
 }
-function get_ui_params() {
-  return {
-    n_curves: Number(document.getElementById("n_curves").value),
-    n_timesteps: Number(document.getElementById("n_timesteps").value),
-    duration: Number(document.getElementById("note_dur").value) * 1000,
-    midi_min: Number(document.getElementById("midi_min_string").value),
-    midi_max: Number(document.getElementById("midi_max_string").value),
-    scale_notes: getChecked(),
-  };
+function update_curves() {
+  ui_params = add_table_ui_params(ui_params);
+  random_curve_data = add_random_curves(random_curve_data, ui_params);
+  random_curve_data = add_midi_curves(random_curve_data);
+  let plot_data = create_plot_data(random_curve_data);
+  plotLines(
+    document.body,
+    plot_data,
+    getAllScaleNotes(ui_params.scale_notes)
+  )
 }
-
-function gen_random_curves() {
-  let ui_params = get_ui_params();
-  rmc.update_curve_data(ui_params);
-  rmc.plot();
-}
-var ui_params = get_ui_params();
-const rmc = new RandomMidiCurves(ui_params) 
-rmc.plot();
-document.getElementById("gen-random-curves-button").addEventListener('click', gen_random_curves);
-
-
-
+plot_curves();
 
 function adaptToSelectedNotes() {
-    rmc.play();
+  playMultipleSequences(random_curve_data.map((x) => x.midi_curve), ui_params.duration)
 }
 
-document.getElementById("plot-and-play-button").addEventListener('click', adaptToSelectedNotes);
+$(document).on("change", ".sync", plot_curves)
+$(document).on("change", "td, #show-scaled-random", update_curves)
+$("#plot-and-play-button").on('click', adaptToSelectedNotes); 
 
+console.log(random_curve_data)
