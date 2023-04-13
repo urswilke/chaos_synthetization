@@ -13,6 +13,7 @@ export default function plotLines(parent, data, allScaleNotes) {
                 curve: "step",
                 stroke: "i"
             }),
+            // https://talk.observablehq.com/t/plot-conditional-control-over-marks/6499/2
             Plot.dot((show_random_vals) ? data : [], {
                 x: "t",
                 y: "scaled_random",
