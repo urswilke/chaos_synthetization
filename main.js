@@ -30,7 +30,7 @@ function adaptToSelectedNotes() {
 }
 
 $(document).on("change", ".sync", plot_curves)
-$(document).on("change", "td", update_curves)
+$(document).on("change", "td, #show-scaled-random", update_curves)
 $("#plot-and-play-button").on('click', adaptToSelectedNotes); 
 
 console.log(random_curve_data)

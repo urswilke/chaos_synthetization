@@ -1,5 +1,6 @@
 import * as Plot from "https://cdn.jsdelivr.net/npm/@observablehq/plot@0.6/+esm";
 export default function plotLines(parent, data, allScaleNotes) {
+    let show_random_vals = document.querySelector("#show-scaled-random").checked;
     let plotElement = Plot.plot({
         color: {
             type: "categorical"
@@ -12,7 +13,7 @@ export default function plotLines(parent, data, allScaleNotes) {
                 curve: "step",
                 stroke: "i"
             }),
-            Plot.dot(data, {
+            Plot.dot((show_random_vals) ? data : [], {
                 x: "t",
                 y: "scaled_random",
                 stroke: "i",
