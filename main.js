@@ -25,8 +25,8 @@ function update_curves() {
 }
 plot_curves();
 
-function adaptToSelectedNotes() {
-  playMultipleSequences(random_curve_data.map((x) => x.midi_curve), ui_params.duration)
+async function adaptToSelectedNotes() {
+  await playMultipleSequences(random_curve_data.map((x) => x.midi_curve), ui_params.duration)
 }
 
 $(document).on("change", ".sync", plot_curves)

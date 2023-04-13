@@ -23,8 +23,8 @@ async function playSequence(notes, duration){
   }
 }
 
-export default function playMultipleSequences(l, duration) {
+export default async function playMultipleSequences(l, duration) {
   for (let i = 0; i < l.length; i++) {
-    playSequence(l[i], duration)
+    playSequence(l[i], duration);
   }
 }
