@@ -1,4 +1,5 @@
 import perlin from 'perlin-noise' ;
+import { groupby_intervals_mean } from './utils.js';
 
 export function add_random_curves(random_curve_data, ui_params) {
   let tbl = ui_params.ui_curve_params;
@@ -26,7 +27,7 @@ export function gen_random_curves_array(ui_params) {
     res[i_curve] = {};
     res[i_curve].raw_curve = perlin.generatePerlinNoise(
       1, 
-      ui_params.n_timesteps / ui_params.ui_curve_params.note_lengths[i_curve]
+      ui_params.n_timesteps
     )
       .map((x) => (x - 0.5) * 2);
   }
@@ -38,7 +39,11 @@ export function add_midi_curves(random_curve_data) {
   let res = new Array(n_curves);
   for (let i_curve = 0; i_curve < n_curves; i_curve++) {
     let element = random_curve_data[i_curve]
-    element.scaled_random_curve = element.raw_curve
+    element.raw_curve_agg = groupby_intervals_mean(
+      random_curve_data[i_curve].raw_curve,
+      random_curve_data[i_curve].note_length
+    );
+element.scaled_random_curve = element.raw_curve_agg
       .map((x) => element.root_note + element.random_amplitude * x);
     element.midi_curve = element.scaled_random_curve
       .map((x) => getClosestScaleNote(
