@@ -18,8 +18,8 @@ async function playSequence(notes, duration){
   const sleep = m => new Promise(r => setTimeout(r, m));
 
   for(const midi of notes){
-    await sleep(duration);
     playNote(ctx, midi, duration)
+    await sleep(duration);
   }
 }
 
