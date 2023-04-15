@@ -25,6 +25,6 @@ async function playSequence(notes, duration){
 
 export default async function playMultipleSequences(l) {
   for (let i = 0; i < l.length; i++) {
-    playSequence(l[i].midi_curve, l[i].duration);
+    playSequence(l[i].midi_curve, l[i].duration * l[i].note_length);
   }
 }
