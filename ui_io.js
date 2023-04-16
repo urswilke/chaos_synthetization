@@ -11,8 +11,7 @@ export function setup_table(n_curves) {
 }
 
   
-function rand_root_notes() {
-    let items = getAllScaleNotes([0, 7], 36, 84);
+function sample1(items) {
     // https://stackoverflow.com/a/5915122
     return items[Math.floor(Math.random() * items.length)];
 }
@@ -20,22 +19,26 @@ export function set_table_values() {
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
         let row = $(this);
         
-        let midi = rand_root_notes();
+        let midi = sample1(getAllScaleNotes([0, 7], 36, 84));
         let ampli = Math.floor(midi / 6);
+        let note_length = sample1([1, 2, 4]);
         
         row.find("input.root_note").val(midi);
         row.find("input.random_amplitude").val(ampli);
+        row.find("input.note_length").val(note_length);
     });
 }
 
 export function add_table_ui_params(ui_params) {
     let root_notes = [];
     let random_amplitudes = [];
+    let note_lengths = [];
     let note_checks = [];
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
         let row = $(this);
         root_notes.push(Number(row.find("input.root_note").val()));
         random_amplitudes.push(Number(row.find("input.random_amplitude").val()));
+        note_lengths.push(Number(row.find("input.note_length").val()));
         note_checks.push(row
             .find("input.note_check")
             .filter(function() {return this.checked;})
@@ -47,6 +50,7 @@ export function add_table_ui_params(ui_params) {
     ui_params.ui_curve_params = {
         root_notes,
         random_amplitudes,
+        note_lengths,
         note_checks
     };
     // window.ui_curve_params = ui_curve_params;

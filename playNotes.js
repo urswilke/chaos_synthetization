@@ -18,13 +18,13 @@ async function playSequence(notes, duration){
   const sleep = m => new Promise(r => setTimeout(r, m));
 
   for(const midi of notes){
-    await sleep(duration);
     playNote(ctx, midi, duration)
+    await sleep(duration);
   }
 }
 
-export default async function playMultipleSequences(l, duration) {
+export default async function playMultipleSequences(l) {
   for (let i = 0; i < l.length; i++) {
-    playSequence(l[i], duration);
+    playSequence(l[i].midi_curve, l[i].duration * l[i].note_length);
   }
 }

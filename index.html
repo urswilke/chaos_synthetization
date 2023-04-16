@@ -27,7 +27,8 @@
     </p>
     <input type="number" class="reload"  value="24" id="midi_min_string" size="4">
     <input type="number" class="reload" value="108" id="midi_max_string" size="4">
-    <input id="n_timesteps" class="reload" type="number" value="64" min="1" max="1000" size="4">number of time steps</input>
+    <input id="n_timesteps" class="reload" type="range" value="64" min="4" max="1000" step="4" size="4" oninput="this.nextElementSibling.value = this.value">number of time steps: </input>
+    <output>64</output>
     <input id="note_dur" class="reload" type="number" value="0.25" min="0.1" max="10" size="4">note duration (in s)</input>
   
     <div class="curve_params_div">
@@ -35,6 +36,7 @@
           <tr>
               <td>midi</td>
               <td>random amplitude</td>
+              <td>note length</td>
               <td>c</td>
               <td>c#</td>
               <td>d</td>
@@ -56,6 +58,7 @@
           <tr class="i_curve_params">
               <td><input class="root_note" value="1" type="number" size="4"/></td>
                 <td><input class="random_amplitude" value="1" type="number" step="any" size="4"/></td>
+                <td><input class="note_length" value="1" type="number" step="any" size="4"/></td>
                   <td><input type="checkbox" class="note_check" id="C" value=0 checked></td>
                   <td><input type="checkbox" class="note_check" id="C#" value=1></td>
                   <td><input type="checkbox" class="note_check" id="D" value=2 checked></td>
@@ -75,7 +78,7 @@
   <input type="checkbox" id="show-scaled-random" checked>Show scaled random values</button>
 
   <div id="stepPlot"></div>
-  <button name="plot-and-play-button" id="plot-and-play-button">🔊 Play 🔊</button>
+  <button name="play-button" id="play-button">🔊 Play 🔊</button>
   <br>
   <a href="https://github.com/urswilke/chaos_synthetization">Source code</a>
   

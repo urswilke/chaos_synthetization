@@ -25,12 +25,12 @@ function update_curves() {
 }
 plot_curves();
 
-async function adaptToSelectedNotes() {
-  await playMultipleSequences(random_curve_data.map((x) => x.midi_curve), ui_params.duration)
+async function playMidi() {
+  await playMultipleSequences(random_curve_data)
 }
 
 $(document).on("change", ".reload", plot_curves)
 $(document).on("change", "td, #show-scaled-random", update_curves)
-$("#plot-and-play-button").on('click', adaptToSelectedNotes); 
+$("#play-button").on('click', playMidi); 
 
 console.log(random_curve_data)

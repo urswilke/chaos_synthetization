@@ -10,12 +10,12 @@ export default function plotLines(parent, data, allScaleNotes) {
             Plot.line(data, {
                 x: "t",
                 y: "midi",
-                curve: "step",
+                curve: "step-before",
                 stroke: "i"
             }),
             // https://talk.observablehq.com/t/plot-conditional-control-over-marks/6499/2
             Plot.dot((show_random_vals) ? data : [], {
-                x: "t",
+                x: "t_dot",
                 y: "scaled_random",
                 stroke: "i",
                 r: 0.5
