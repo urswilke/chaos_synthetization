@@ -3,6 +3,13 @@ import { getAllScaleNotes, create_plot_data, add_midi_curves, gen_random_curves_
 import playMultipleSequences from './playNotes.js'
 import plotLines from "./plot.js";
 import $ from "jquery";
+import { loadSoundfont } from 'sfumato';
+
+var sf2 = await loadSoundfont(
+  // 'https://raw.githubusercontent.com/surikov/webaudiofontdata/master/sf2/Acoustic%20Guitar.sf2'
+  'https://raw.githubusercontent.com/felixroos/felixroos.github.io/main/public/Earthbound_NEW.sf2'
+  // 'https://raw.githubusercontent.com/urswilke/chaos_synthetization/main/public/052_Florestan_Ahh_Choir.sf2'
+)
 
 var ui_params;
 var random_curve_data;
@@ -41,7 +48,7 @@ async function playMidi() {
     update_period
   );
 
-  let promises = await playMultipleSequences(random_curve_data);
+  let promises = await playMultipleSequences(random_curve_data, sf2);
   Promise.all(promises).then(() => {
     clearInterval(seconds_counter);
   });
@@ -55,3 +62,65 @@ $("#time_display_field")
   .before("time t = ")
   .after(" s");
 console.log(random_curve_data)
+
+
+var preset_names = sf2.presets.map(x => x.header.name);
+var presets_html = $('.presets_content');
+for(var i = 0; i <= sf2.presets.length; i++) {
+  presets_html.append('<button class="sf2_preset" key="' + i + '" active="yes">' + preset_names[i] + '</button>');
+}
+var coll = $(".collapsible");
+// for(var i = 0; i <= sf2.presets.length; i++) {
+  coll.on("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+
+
+function get_preset_indices() {
+  let presets_active = [];
+  let counter = 0;
+  $("button.sf2_preset").on("click").each(function () {
+    let preset = $(this);
+    if (preset.attr("active") === "yes") {
+      presets_active.push(counter);
+    }
+    counter += 1;
+  });  
+  return presets_active;
+}
+var presets_checked = get_preset_indices();
+console.log(presets_checked)
+
+function change_active(e) {
+  if (e.currentTarget.attributes.active.nodeValue === "yes") {
+    e.currentTarget.attributes.active.nodeValue = "no";
+  } else {
+    e.currentTarget.attributes.active.nodeValue = "yes";
+  }
+}
+
+$('button.sf2_preset')
+  .each(function() {
+    $(this).on('click', change_active)
+  });
+
+  console.log(presets_checked)
+
+
+for(var i = 0; i <= sf2.presets.length; i++) {
+  coll.on("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
