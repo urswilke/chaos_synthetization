@@ -13,20 +13,23 @@ function playNote(ctx, midi, duration) {
     stopHandle((ctx.currentTime || 0));
   }, duration);
 }
-async function playSequence(notes, duration){
+async function playSequence(element){
+  let notes = element.midi_curve;
+  let duration = element.duration * element.note_length;
   const ctx = typeof AudioParam !== 'undefined' ? new AudioContext() : null;
   const sleep = m => new Promise(r => setTimeout(r, m));
-  for (let i = 0; i < notes.length - 1; i++) {
+  for (let i = 1; i < notes.length; i++) {
     const note = notes[i]; 
     playNote(ctx, note.midi, duration)
-    await sleep(duration);
+    await sleep((note.t - notes[i - 1].t) * duration);
+    // await sleep(duration);
   }
 }
 
 export default async function playMultipleSequences(l) {
   let promises = new Array(l.length);
   for (let i = 0; i < l.length; i++) {
-    promises[i] = playSequence(l[i].midi_curve, l[i].duration * l[i].note_length);
+    promises[i] = playSequence(l[i]);
   }
   return promises;
 }

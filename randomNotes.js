@@ -67,9 +67,9 @@ export function add_midi_curves(random_curve_data) {
         }
       });
 
-    res[i_curve] = element;
+    // res[i_curve] = element;
   }
-  return res;
+  return random_curve_data;
 }
 
 export function getAllScaleNotes(steps, midi_min, midi_max) {
