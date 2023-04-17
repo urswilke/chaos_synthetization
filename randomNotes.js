@@ -39,13 +39,13 @@ export function add_midi_curves(random_curve_data) {
   let res = new Array(n_curves);
   for (let i_curve = 0; i_curve < n_curves; i_curve++) {
     let element = random_curve_data[i_curve]
-    element.raw_curve_agg = groupby_intervals_mean(
-      random_curve_data[i_curve].raw_curve,
-      random_curve_data[i_curve].note_length
+    random_curve_data[i_curve].raw_curve_agg = groupby_intervals_mean(
+      element.raw_curve,
+      element.note_length
     );
-element.scaled_random_curve = element.raw_curve_agg
+    random_curve_data[i_curve].scaled_random_curve = random_curve_data[i_curve].raw_curve_agg
       .map((x) => element.root_note + element.random_amplitude * x);
-    element.midi_curve = element.scaled_random_curve
+    random_curve_data[i_curve].midi_curve_raw = element.scaled_random_curve
       .map((x) => getClosestScaleNote(
         x, 
         getAllScaleNotes(
@@ -54,6 +54,19 @@ element.scaled_random_curve = element.raw_curve_agg
           element.midi_max
         )
       ));
+      random_curve_data[i_curve].midi_curve = random_curve_data[i_curve].midi_curve_raw
+      .map(function(el, t) {
+        return {
+          i: i_curve,
+          // modify plotting to use the starting / end points of the note intervals, 
+          // and put the random curve time point coordinates in the middle of these intervals
+          t: (t + 1) * element.note_length,
+          t_dot: (t + 1/2) * element.note_length,
+          midi: el,
+          scaled_random: random_curve_data[i_curve].scaled_random_curve[t]
+        }
+      });
+
     res[i_curve] = element;
   }
   return res;
@@ -83,17 +96,6 @@ export function create_plot_data(x) {
   let elements = new Array(x.length);
   for (let i = 0; i < x.length; i++) {
     elements[i] = x[i].midi_curve
-      .map(function(el, t) {
-        return {
-          i,
-          // modify plotting to use the starting / end points of the note intervals, 
-          // and put the random curve time point coordinates in the middle of these intervals
-          t: (t + 1) * x[i].note_length,
-          t_dot: (t + 1/2) * x[i].note_length,
-          midi: el,
-          scaled_random: x[i].scaled_random_curve[t]
-        }
-    });
     // we need to make a deep clone, in order to manipulate the element afterwards without modifying the original...:
     // https://stackoverflow.com/a/122704
     // let cloned_element = structuredClone(elements[i][0]);
@@ -102,8 +104,6 @@ export function create_plot_data(x) {
     // is the same as:
     // elements[i].unshift(elements[i].map(a => ({...a}))[0]);
     elements[i][0].t = 0;
-    // elements[i].unshift(elements[i][0]);
-    // elements[i][0].t = 0;
   }
-  return elements.flat();
+  return x.map(x => x.midi_curve).flat();
 }

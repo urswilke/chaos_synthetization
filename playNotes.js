@@ -16,9 +16,9 @@ function playNote(ctx, midi, duration) {
 async function playSequence(notes, duration){
   const ctx = typeof AudioParam !== 'undefined' ? new AudioContext() : null;
   const sleep = m => new Promise(r => setTimeout(r, m));
-
-  for(const midi of notes){
-    playNote(ctx, midi, duration)
+  for (let i = 0; i < notes.length - 1; i++) {
+    const note = notes[i]; 
+    playNote(ctx, note.midi, duration)
     await sleep(duration);
   }
 }
