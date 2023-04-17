@@ -67,7 +67,7 @@ console.log(random_curve_data)
 var preset_names = sf2.presets.map(x => x.header.name);
 var presets_html = $('.presets_content');
 for(var i = 0; i <= sf2.presets.length; i++) {
-  presets_html.append('<button class="sf2_preset" key="' + i + '" active="yes">' + preset_names[i] + '</button>');
+  presets_html.append('<button class="sf2_preset" preset_key="' + i + '" active="no">' + preset_names[i] + '</button>');
 }
 var coll = $(".collapsible");
 // for(var i = 0; i <= sf2.presets.length; i++) {
@@ -94,14 +94,13 @@ function get_preset_indices() {
   });  
   return presets_active;
 }
-var presets_checked = get_preset_indices();
-console.log(presets_checked)
 
 function change_active(e) {
   if (e.currentTarget.attributes.active.nodeValue === "yes") {
     e.currentTarget.attributes.active.nodeValue = "no";
   } else {
     e.currentTarget.attributes.active.nodeValue = "yes";
+    document.getElementById("presets_string").value += "," + e.currentTarget.textContent
   }
 }
 
@@ -124,3 +123,21 @@ for(var i = 0; i <= sf2.presets.length; i++) {
     }
   });
 }
+
+
+function get_preselected_presets() {
+  let string_arr = document.getElementById("presets_string").value.split(",");
+  let idx = string_arr.map(x => preset_names.indexOf(x))
+  return idx;
+}
+function set_presets() {
+  let idx = get_preselected_presets();
+  $(".sf2_preset")
+      .filter(function() {
+      return idx.indexOf( Number($(this).attr("preset_key") )) >= 0;
+    }).attr('active', 'yes')
+}
+
+set_presets()
+var presets_checked = get_preset_indices();
+console.log(presets_checked)
