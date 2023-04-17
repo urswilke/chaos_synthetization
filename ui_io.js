@@ -77,7 +77,7 @@ export function get_main_ui_params() {
   
 export function update_time_display(time_display_val, curve_plot_element, duration, update_period) {
     const new_timeval = (parseFloat(time_display_val.innerHTML) + update_period / 1000);
-    time_display_val.innerHTML = new_timeval;
+    time_display_val.innerHTML = new_timeval.toFixed(2);
     const step_plot_element = document.getElementById('stepPlot');
     curve_plot_element.update(new_timeval / duration * 1000);
   }
