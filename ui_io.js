@@ -15,17 +15,19 @@ function sample1(items) {
     // https://stackoverflow.com/a/5915122
     return items[Math.floor(Math.random() * items.length)];
 }
-export function set_table_values() {
+export function set_table_values(selected_presets) {
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
         let row = $(this);
         
         let midi = sample1(getAllScaleNotes([0, 7], 36, 84));
         let ampli = Math.floor(midi / 6);
         let note_length = sample1([1, 2, 4]);
+        let preset = sample1(Array.from(selected_presets.keys()));
         
         row.find("input.root_note").val(midi);
         row.find("input.random_amplitude").val(ampli);
         row.find("input.note_length").val(note_length);
+        row.find("select.preset_multiselect").val(preset);
     });
 }
 
@@ -74,7 +76,7 @@ export function get_presets(presets) {
 }
 export function put_presets_in_table_template(selected_presets, presets) {
     var select_template = document.createElement('select');
-    select_template.setAttribute("id", "preset_multiselect")
+    select_template.setAttribute("class", "preset_multiselect")
     
     for (let i = 0; i < selected_presets.length; i++) {
         var opt = document.createElement('option');
@@ -83,12 +85,12 @@ export function put_presets_in_table_template(selected_presets, presets) {
         select_template.appendChild(opt);
     }
     document.body.append(select_template)
-    $( ".select_preset_to_replace" ).replaceWith( $("#preset_multiselect") )
+    $( ".select_preset_to_replace" ).replaceWith( $(".preset_multiselect") )
 }
-export function get_main_ui_params() {
+export function get_main_ui_params(selected_presets) {
     let n_curves = Number(document.getElementById("n_curves").value);
     setup_table(n_curves);
-    set_table_values();
+    set_table_values(selected_presets);
     // let ui_curve_params = get_table_values();
     let scale_notes = [];
     return {

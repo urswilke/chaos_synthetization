@@ -20,7 +20,7 @@ function plot_curves() {
   selected_presets = get_presets(presets);
   put_presets_in_table_template(selected_presets, presets);
 
-  ui_params = get_main_ui_params();
+  ui_params = get_main_ui_params(selected_presets);
   ui_params = add_table_ui_params(ui_params);
   random_curve_data = gen_random_curves_array(ui_params);
   update_curves();
