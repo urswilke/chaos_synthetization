@@ -87,8 +87,7 @@ export function put_presets_in_table_template(selected_presets, presets) {
         opt.innerHTML = presets[selected_presets[i]];
         select_template.appendChild(opt);
     }
-    document.body.append(select_template)
-    $( ".select_preset_to_replace" ).replaceWith( $(".preset_multiselect") )
+    $( ".preset_multiselect" ).replaceWith( select_template )
 }
 export function get_main_ui_params(selected_presets) {
     let n_curves = Number(document.getElementById("n_curves").value);
