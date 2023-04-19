@@ -1,5 +1,6 @@
 import $ from "jquery";
 import { getAllScaleNotes } from './randomNotes.js';
+import { sampleWithoutReplace } from './utils.js';
 export function setup_table(n_curves) {
     $('#curve_params_tbl tbody').find("tr:gt(0)").remove();
     for (let i = 0; i < n_curves; i++) {
@@ -16,10 +17,11 @@ function sample1(items) {
     return items[Math.floor(Math.random() * items.length)];
 }
 export function set_table_values(selected_presets) {
+    var array = getAllScaleNotes([0, 5, 7], 36, 72);
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
         let row = $(this);
         
-        let midi = sample1(getAllScaleNotes([0, 7], 36, 84));
+        let midi = sampleWithoutReplace(array);
         let ampli = Math.floor(midi / 6);
         let note_length = sample1([1, 2, 4]);
         let preset = sample1(Array.from(selected_presets.keys()));
@@ -114,3 +116,16 @@ export function update_time_display(time_display_val, curve_plot_element, durati
     curve_plot_element.update(new_timeval / duration * 1000);
   }
   
+// https://stackoverflow.com/a/53073422
+$(function () {
+    $("#n_curves").change(function () {
+        var max = parseInt($(this).attr('max'));
+        var min = parseInt($(this).attr('min'));
+        if ($(this).val() > max) {
+            $(this).val(max);
+        }
+        else if ($(this).val() < min) {
+            $(this).val(min);
+        }
+    });
+});
