@@ -57,7 +57,34 @@ export function add_table_ui_params(ui_params) {
     return ui_params;
 }
 
-
+export function get_presets(presets) {
+    var select = document.getElementById('presets_selector');
+    var preselected_presets = [0, 1, 3, 8, 61, 80];
+    
+    for (var i = 0; i < presets.length; i++) {
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.innerHTML = presets[i];
+        if (preselected_presets.includes(i)) {
+            opt.selected = true;
+        }
+        select.appendChild(opt);
+    }
+    return $('#presets_selector').val().map(Number);
+}
+export function put_presets_in_table_template(selected_presets, presets) {
+    var select_template = document.createElement('select');
+    select_template.setAttribute("id", "preset_multiselect")
+    
+    for (let i = 0; i < selected_presets.length; i++) {
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.innerHTML = presets[selected_presets[i]];
+        select_template.appendChild(opt);
+    }
+    document.body.append(select_template)
+    $( ".select_preset_to_replace" ).replaceWith( $("#preset_multiselect") )
+}
 export function get_main_ui_params() {
     let n_curves = Number(document.getElementById("n_curves").value);
     setup_table(n_curves);

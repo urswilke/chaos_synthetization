@@ -1,4 +1,4 @@
-import { get_main_ui_params, add_table_ui_params, setup_table, set_table_values, update_time_display } from './ui_io.js'
+import { get_main_ui_params, add_table_ui_params, setup_table, set_table_values, update_time_display, get_presets, put_presets_in_table_template } from './ui_io.js'
 import { getAllScaleNotes, create_plot_data, add_midi_curves, gen_random_curves_array, add_random_curves } from "./randomNotes.js";
 import playMultipleSequences from './playNotes.js'
 import plotLines from "./plot.js";
@@ -13,7 +13,13 @@ var sf2 = await loadSoundfont(
 
 var ui_params;
 var random_curve_data;
+var presets = sf2.presets.map(x => x.header.name);
+var selected_presets;
+
 function plot_curves() {
+  selected_presets = get_presets(presets);
+  put_presets_in_table_template(selected_presets, presets);
+
   ui_params = get_main_ui_params();
   ui_params = add_table_ui_params(ui_params);
   random_curve_data = gen_random_curves_array(ui_params);
@@ -64,28 +70,3 @@ $("#time_display_field")
 console.log(random_curve_data)
 
 
-var select = document.getElementById('presets_selector');
-var presets = sf2.presets.map(x => x.header.name);
-var preselected_presets = [0, 1, 3, 8, 61, 80];
-for (var i = 0; i<sf2.presets.length; i++){
-    var opt = document.createElement('option');
-    opt.value = i;
-    opt.innerHTML = presets[i];
-    if (preselected_presets.includes(i)) {
-      opt.selected = true;
-    }
-    select.appendChild(opt);
-}
-var selected_presets;
-$("#presets_selector").on("change", function(e) {
-  selected_presets = $(e.target).val();
-}); 
-// var select_templates = new Array(selected_presets.length);
-var select_template = document.createElement('select');
-for (let i = 0; i < selected_presets.length; i++) {
-  var opt = document.createElement('option');
-  select_template = opt;
-  select_template.value = i;
-  select_template.innerHTML = presets[i];
-}
-document.body.append(select_template)
