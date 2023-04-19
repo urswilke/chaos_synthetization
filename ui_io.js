@@ -35,12 +35,14 @@ export function add_table_ui_params(ui_params) {
     let root_notes = [];
     let random_amplitudes = [];
     let note_lengths = [];
+    let presets = [];
     let note_checks = [];
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
         let row = $(this);
         root_notes.push(Number(row.find("input.root_note").val()));
         random_amplitudes.push(Number(row.find("input.random_amplitude").val()));
         note_lengths.push(Number(row.find("input.note_length").val()));
+        presets.push(ui_params.selected_presets[Number(row.find("select.preset_multiselect").val())]);
         note_checks.push(row
             .find("input.note_check")
             .filter(function() {return this.checked;})
@@ -53,6 +55,7 @@ export function add_table_ui_params(ui_params) {
         root_notes,
         random_amplitudes,
         note_lengths,
+        presets,
         note_checks
     };
     // window.ui_curve_params = ui_curve_params;
@@ -100,6 +103,7 @@ export function get_main_ui_params(selected_presets) {
       midi_min: Number(document.getElementById("midi_min_string").value),
       midi_max: Number(document.getElementById("midi_max_string").value),
       scale_notes,
+      selected_presets
     //   ui_curve_params
     };
   }
