@@ -64,3 +64,28 @@ $("#time_display_field")
 console.log(random_curve_data)
 
 
+var select = document.getElementById('presets_selector');
+var presets = sf2.presets.map(x => x.header.name);
+var preselected_presets = [0, 1, 3, 8, 61, 80];
+for (var i = 0; i<sf2.presets.length; i++){
+    var opt = document.createElement('option');
+    opt.value = i;
+    opt.innerHTML = presets[i];
+    if (preselected_presets.includes(i)) {
+      opt.selected = true;
+    }
+    select.appendChild(opt);
+}
+var selected_presets;
+$("#presets_selector").on("change", function(e) {
+  selected_presets = $(e.target).val();
+}); 
+// var select_templates = new Array(selected_presets.length);
+var select_template = document.createElement('select');
+for (let i = 0; i < selected_presets.length; i++) {
+  var opt = document.createElement('option');
+  select_template = opt;
+  select_template.value = i;
+  select_template.innerHTML = presets[i];
+}
+document.body.append(select_template)

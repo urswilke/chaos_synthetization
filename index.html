@@ -13,7 +13,7 @@
 
 <body>
   <div id="app"></div>
-
+  <select multiple id="presets_selector"></select>  
   <p>
     <label>Enter number of curves<strong> (overwrites/deletes all previous entries below!)</strong></label>
     <input name="n_curves_input" class="reload" id="n_curves" type="number" value="5" min="1" max="50"
@@ -33,6 +33,7 @@
         <td>midi</td>
         <td>random amplitude</td>
         <td>note length</td>
+        <td>preset</td>
         <td>c</td>
         <td>c#</td>
         <td>d</td>
@@ -55,6 +56,7 @@
         <td><input class="root_note" value="1" type="number" size="4" /></td>
         <td><input class="random_amplitude" value="1" type="number" step="any" size="4" /></td>
         <td><input class="note_length" value="1" type="number" step="any" size="4" /></td>
+        <td><select class="select_preset" value="1"/></td>
         <td><input type="checkbox" class="note_check" id="C" value=0 checked></td>
         <td><input type="checkbox" class="note_check" id="C#" value=1></td>
         <td><input type="checkbox" class="note_check" id="D" value=2 checked></td>
