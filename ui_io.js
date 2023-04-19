@@ -64,7 +64,7 @@ export function add_table_ui_params(ui_params) {
 
 export function get_presets(presets) {
     var select = document.getElementById('presets_selector');
-    var preselected_presets = [0, 1, 3, 8, 61, 80];
+    var preselected_presets = [1, 3, 8, 61, 63, 98];
     
     for (var i = 0; i < presets.length; i++) {
         var opt = document.createElement('option');
