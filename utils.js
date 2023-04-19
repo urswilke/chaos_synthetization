@@ -18,3 +18,10 @@ function divide_arrays(arr1, arr2) {
         return num / arr2[idx];
       });
 }
+
+// https://stackoverflow.com/a/12987776
+export function sampleWithoutReplace(array) {
+    var randomIndex = Math.floor(Math.random() * array.length);
+    return array.splice(randomIndex, 1)[0];
+
+}

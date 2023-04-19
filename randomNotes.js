@@ -13,7 +13,8 @@ export function add_random_curves(random_curve_data, ui_params) {
       midi_min: ui_params.midi_min,
       midi_max: ui_params.midi_max,
       duration: ui_params.duration,
-      note_length: tbl.note_lengths[i_curve]
+      note_length: tbl.note_lengths[i_curve],
+      preset: tbl.presets[i_curve]
     };
     random_curve_data[i_curve] = { ...random_curve_data[i_curve], ...element};
   }

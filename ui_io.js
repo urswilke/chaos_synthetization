@@ -1,5 +1,6 @@
 import $ from "jquery";
 import { getAllScaleNotes } from './randomNotes.js';
+import { sampleWithoutReplace } from './utils.js';
 export function setup_table(n_curves) {
     $('#curve_params_tbl tbody').find("tr:gt(0)").remove();
     for (let i = 0; i < n_curves; i++) {
@@ -15,17 +16,20 @@ function sample1(items) {
     // https://stackoverflow.com/a/5915122
     return items[Math.floor(Math.random() * items.length)];
 }
-export function set_table_values() {
+export function set_table_values(selected_presets) {
+    var array = getAllScaleNotes([0, 5, 7], 36, 72);
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
         let row = $(this);
         
-        let midi = sample1(getAllScaleNotes([0, 7], 36, 84));
+        let midi = sampleWithoutReplace(array);
         let ampli = Math.floor(midi / 6);
         let note_length = sample1([1, 2, 4]);
+        let preset = sample1(Array.from(selected_presets.keys()));
         
         row.find("input.root_note").val(midi);
         row.find("input.random_amplitude").val(ampli);
         row.find("input.note_length").val(note_length);
+        row.find("select.preset_multiselect").val(preset);
     });
 }
 
@@ -33,12 +37,14 @@ export function add_table_ui_params(ui_params) {
     let root_notes = [];
     let random_amplitudes = [];
     let note_lengths = [];
+    let presets = [];
     let note_checks = [];
     $("tr.i_curve_params").not(".template tr.i_curve_params").each(function () {
         let row = $(this);
         root_notes.push(Number(row.find("input.root_note").val()));
         random_amplitudes.push(Number(row.find("input.random_amplitude").val()));
         note_lengths.push(Number(row.find("input.note_length").val()));
+        presets.push(ui_params.selected_presets[Number(row.find("select.preset_multiselect").val())]);
         note_checks.push(row
             .find("input.note_check")
             .filter(function() {return this.checked;})
@@ -51,17 +57,44 @@ export function add_table_ui_params(ui_params) {
         root_notes,
         random_amplitudes,
         note_lengths,
+        presets,
         note_checks
     };
     // window.ui_curve_params = ui_curve_params;
     return ui_params;
 }
 
-
-export function get_main_ui_params() {
+export function get_presets(presets) {
+    var select = document.getElementById('presets_selector');
+    var preselected_presets = [1, 6, 8, 61, 63, 98];
+    
+    for (var i = 0; i < presets.length; i++) {
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.innerHTML = presets[i];
+        if (preselected_presets.includes(i)) {
+            opt.selected = true;
+        }
+        select.appendChild(opt);
+    }
+    return $('#presets_selector').val().map(Number);
+}
+export function put_presets_in_table_template(selected_presets, presets) {
+    var select_template = document.createElement('select');
+    select_template.setAttribute("class", "preset_multiselect")
+    
+    for (let i = 0; i < selected_presets.length; i++) {
+        var opt = document.createElement('option');
+        opt.value = i;
+        opt.innerHTML = presets[selected_presets[i]];
+        select_template.appendChild(opt);
+    }
+    $( ".preset_multiselect" ).replaceWith( select_template )
+}
+export function get_main_ui_params(selected_presets) {
     let n_curves = Number(document.getElementById("n_curves").value);
     setup_table(n_curves);
-    set_table_values();
+    set_table_values(selected_presets);
     // let ui_curve_params = get_table_values();
     let scale_notes = [];
     return {
@@ -71,6 +104,7 @@ export function get_main_ui_params() {
       midi_min: Number(document.getElementById("midi_min_string").value),
       midi_max: Number(document.getElementById("midi_max_string").value),
       scale_notes,
+      selected_presets
     //   ui_curve_params
     };
   }
@@ -82,3 +116,16 @@ export function update_time_display(time_display_val, curve_plot_element, durati
     curve_plot_element.update(new_timeval / duration * 1000);
   }
   
+// https://stackoverflow.com/a/53073422
+$(function () {
+    $("#n_curves").change(function () {
+        var max = parseInt($(this).attr('max'));
+        var min = parseInt($(this).attr('min'));
+        if ($(this).val() > max) {
+            $(this).val(max);
+        }
+        else if ($(this).val() < min) {
+            $(this).val(min);
+        }
+    });
+});
